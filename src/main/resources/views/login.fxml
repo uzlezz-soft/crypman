@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: linear-gradient(to bottom, #FFFFFF, #F2F2F2); -fx-padding: 40;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="net.uzlezz.crypman.gui.controllers.LoginController">
+
+    <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../images/logo.gif" />
+        </image>
+    </ImageView>
+
+
+    <Text style="-fx-fill: #000000;" text="Авторизация">
+        <font>
+            <Font name="Helvetica Neue" size="24" />
+        </font>
+    </Text>
+
+    <Separator prefWidth="300" style="-fx-background-color: #CCCCCC;" />
+
+
+    <TextField fx:id="usernameField" maxWidth="300" promptText="username" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <PasswordField fx:id="passwordField" maxWidth="300" promptText="password" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+
+    <Button fx:id="loginButton" maxWidth="200" onAction="#onLoginButton" style="-fx-background-color: #000000; -fx-text-fill: #FFFFFF; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Войти" />
+
+    <Separator prefWidth="300" style="-fx-background-color: #CCCCCC;" />
+
+    <Button fx:id="regButton" maxWidth="200" onAction="#onRegButton" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-text-fill: #000000; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Регистрация" />
+
+</VBox>
