@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861b179b-bb84-4de6-9ec0-e1ff59e9d88d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/RegisterController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/utils/AlertUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/utils/StageLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/register.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/server.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/CrypmanApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/HelloController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/logo.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/logo.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/hello-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
