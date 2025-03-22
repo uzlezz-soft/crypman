@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #121212; -fx-padding: 40;"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="net.uzlezz.crypman.gui.controllers.RegisterController">
+
+    <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../images/logo.png" />
+        </image>
+    </ImageView>
+
+
+    <Text style="-fx-fill: #b5b5b5;" text="Регистрация">
+        <font>
+            <Font name="Helvetica Neue" size="24" />
+        </font>
+    </Text>
+
+    <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
+
+    <TextField fx:id="usernameField" maxWidth="300" promptText="username" style="-fx-background-color: #363636; -fx-border-color: #000000; -fx-text-fill: d9d9d9; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <PasswordField fx:id="passwordField" maxWidth="300" promptText="password" style="-fx-background-color: #363636; -fx-border-color: #000000; -fx-text-fill: d9d9d9; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <PasswordField fx:id="confirmationPasswordField" maxWidth="300" promptText="confirm password" style="-fx-background-color: #363636; -fx-border-color: #000000; -fx-text-fill: d9d9d9; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+
+    <Button maxWidth="200" onAction="#onRegButtonPressed" style="-fx-background-color: #2e2e2e; -fx-text-fill: #d9d9d9; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Зарегистрироваться" />
+
+    <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
+
+    <Button maxWidth="200" onAction="#onLoginButtonPressed" style="-fx-background-color: #1f1f1f; -fx-border-color: #000000; -fx-text-fill: #bfbdbd; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Авторизация" />
+
+</VBox>
