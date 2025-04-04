@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
+import net.uzlezz.crypman.network.Request;
+import net.uzlezz.crypman.network.ServerClient;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -19,15 +21,10 @@ public class LoginController {
 
     @FXML
     public void onLoginButtonPressed() {
-        var bundle = ResourceBundle.getBundle("server");
-        var address = bundle.getString("SERVER_ADDRESS");
-        var port = Integer.parseInt(bundle.getString("SERVER_PORT"));
+        var request = new Request("user/login", null);
+        var response = ServerClient.getInstance().sendRequest(request);
 
-        try (var socket = new Socket(address, port)) {
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        AlertUtils.showInformation("Login", response.toString());
     }
 
     @FXML

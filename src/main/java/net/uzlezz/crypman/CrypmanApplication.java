@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import net.uzlezz.crypman.network.Request;
+import net.uzlezz.crypman.network.ResponseStatus;
+import net.uzlezz.crypman.network.ServerClient;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -19,6 +22,20 @@ public class CrypmanApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop() {
+        var client = ServerClient.getInstance();
+        if (client == null) return;
+
+        var request = new Request("DISCONNECT", null);
+        var response = client.sendRequest(request);
+
+        if (response.getStatus() == ResponseStatus.OK) {
+            System.out.println("Disconnected successfully from the server");
+        }
+        client.disconnect();
     }
 
     public static void main(String[] args) {
