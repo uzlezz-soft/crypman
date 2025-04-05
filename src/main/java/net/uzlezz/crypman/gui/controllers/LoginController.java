@@ -1,19 +1,15 @@
 package net.uzlezz.crypman.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
+import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
-
-import java.io.IOException;
-import java.net.Socket;
-import java.net.URL;
-import java.util.ResourceBundle;
+import net.uzlezz.crypman.network.schemas.UserLoginRequest;
 
 public class LoginController {
     @FXML private TextField usernameField;
@@ -21,10 +17,10 @@ public class LoginController {
 
     @FXML
     public void onLoginButtonPressed() {
-        var request = new Request("user/login", null);
+        var payload = new UserLoginRequest(usernameField.getText(), passwordField.getText());
+        var request = new Request("user/login", payload);
         var response = ServerClient.getInstance().sendRequest(request);
-
-        AlertUtils.showInformation("Login", response.toString());
+        ResponseFailureUtils.handle(response);
     }
 
     @FXML

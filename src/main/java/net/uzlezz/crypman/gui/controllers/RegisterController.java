@@ -1,20 +1,15 @@
 package net.uzlezz.crypman.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
+import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import net.uzlezz.crypman.network.schemas.UserLoginRequest;
 
 public class RegisterController {
     @FXML private TextField usernameField;
@@ -23,10 +18,15 @@ public class RegisterController {
 
     @FXML
     public void onRegButtonPressed() {
-        var request = new Request("user/register", null);
-        var response = ServerClient.getInstance().sendRequest(request);
+        if (!passwordField.getText().equals(confirmationPasswordField.getText())) {
+            AlertUtils.showError("Register", "Passwords should match");
+            return;
+        }
 
-        AlertUtils.showInformation("Register", response.toString());
+        var payload = new UserLoginRequest(usernameField.getText(), passwordField.getText());
+        var request = new Request("user/register", payload);
+        var response = ServerClient.getInstance().sendRequest(request);
+        ResponseFailureUtils.handle(response);
     }
 
     @FXML
