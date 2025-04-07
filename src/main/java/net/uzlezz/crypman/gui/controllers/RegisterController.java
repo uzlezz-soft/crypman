@@ -9,7 +9,7 @@ import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
-import net.uzlezz.crypman.network.schemas.UserLoginRequest;
+import net.uzlezz.crypman.network.schemas.request.UserLogin;
 
 public class RegisterController {
     @FXML private TextField usernameField;
@@ -23,7 +23,7 @@ public class RegisterController {
             return;
         }
 
-        var payload = new UserLoginRequest(usernameField.getText(), passwordField.getText());
+        var payload = new UserLogin(usernameField.getText(), passwordField.getText());
         var request = new Request("user/register", payload);
         var response = ServerClient.getInstance().sendRequest(request);
         ResponseFailureUtils.handle(response);

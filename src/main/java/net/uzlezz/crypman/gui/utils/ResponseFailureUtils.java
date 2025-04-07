@@ -13,6 +13,7 @@ public class ResponseFailureUtils {
             case BAD_PAYLOAD -> header = "Ошибка данных";
             case UNKNOWN_PATH -> header = "Ошибка пути запроса";
             case INTERNAL_ERROR -> header = "Ошибка на сервере";
+            case NOT_AUTHORIZED -> header = "Необходима авторизация";
             default -> header = "[неизвестно]";
         }
 

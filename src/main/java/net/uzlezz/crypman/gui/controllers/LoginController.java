@@ -4,12 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import net.uzlezz.crypman.gui.enums.StagePath;
-import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
-import net.uzlezz.crypman.network.schemas.UserLoginRequest;
+import net.uzlezz.crypman.network.schemas.request.UserLogin;
 
 public class LoginController {
     @FXML private TextField usernameField;
@@ -17,10 +16,16 @@ public class LoginController {
 
     @FXML
     public void onLoginButtonPressed() {
-        var payload = new UserLoginRequest(usernameField.getText(), passwordField.getText());
+        var payload = new UserLogin(usernameField.getText(), passwordField.getText());
         var request = new Request("user/login", payload);
         var response = ServerClient.getInstance().sendRequest(request);
         ResponseFailureUtils.handle(response);
+
+        request = new Request("user/getInfo", null);
+        response = ServerClient.getInstance().sendRequest(request);
+        ResponseFailureUtils.handle(response);
+
+        System.out.printf("%s%n", response);
     }
 
     @FXML
