@@ -5,6 +5,10 @@ import net.uzlezz.crypman.network.ResponseStatus;
 
 public class ResponseFailureUtils {
     public static void handle(Response response) {
+        if (response == null) {
+            AlertUtils.showError("Ошибка", "Нет ответа от сервера");
+            throw new RuntimeException();
+        }
         if (response.getStatus() == ResponseStatus.OK) return;
 
         String header;

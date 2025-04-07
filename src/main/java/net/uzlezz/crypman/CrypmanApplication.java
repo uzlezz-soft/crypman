@@ -22,6 +22,8 @@ public class CrypmanApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+
+        ServerClient.getInstance();
     }
 
     @Override
