@@ -5,16 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #121212; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.LoginController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.LoginController">
 
-            <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
-          <image>
-              <Image url="@../images/logo150.png" />
-          </image>
-      </ImageView>
+    <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../images/logo150.png"/>
+    </ImageView>
 
 
-    <Text style="-fx-fill: #b5b5b5;" text="Авторизация">
+    <Text style="-fx-fill: #1f1f1f;" text="Авторизация">
         <font>
             <Font name="Helvetica Neue" size="24" />
         </font>
@@ -22,13 +20,13 @@
 
     <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
 
-    <TextField fx:id="usernameField" maxWidth="300" promptText="username" style="-fx-background-color: #363636; -fx-border-color: #000000; -fx-text-fill: d9d9d9; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
-    <PasswordField fx:id="passwordField" maxWidth="300" promptText="password" style="-fx-background-color: #363636; -fx-border-color: #000000; -fx-text-fill: d9d9d9; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <TextField fx:id="usernameField" maxWidth="300" promptText="username" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <PasswordField fx:id="passwordField" maxWidth="300" promptText="password" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
 
-    <Button maxWidth="200" onAction="#onLoginButtonPressed" style="-fx-background-color: #2e2e2e; -fx-text-fill: #d9d9d9; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Войти" />
+    <Button maxWidth="200" onAction="#onLoginButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Войти" />
 
     <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
 
-    <Button maxWidth="200" onAction="#onRegButtonPressed" style="-fx-background-color: #1f1f1f; -fx-border-color: #000000; -fx-text-fill: #bfbdbd; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Регистрация" />
+    <Button maxWidth="200" onAction="#onRegButtonPressed" style="-fx-background-color: #1f1f1f; -fx-border-color: #1f1f1f; -fx-text-fill: #9e9e9e; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Регистрация" />
 
 </VBox>

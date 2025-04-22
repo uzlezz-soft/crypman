@@ -30,6 +30,12 @@ public class LoginController {
         ResponseFailureUtils.handle(response);
 
         System.out.printf("%s%n", response);
+
+        request = new Request("portfolio/get", null);
+        response = ServerClient.getInstance().sendRequest(request);
+        ResponseFailureUtils.handle(response);
+
+        System.out.printf("%s%n", response);
     }
 
     @FXML

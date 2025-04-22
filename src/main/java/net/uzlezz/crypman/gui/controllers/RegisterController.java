@@ -19,7 +19,7 @@ public class RegisterController {
     @FXML
     public void onRegButtonPressed() {
         if (!passwordField.getText().equals(confirmationPasswordField.getText())) {
-            AlertUtils.showError("Register", "Passwords should match");
+            AlertUtils.showError("Регистрация", "Пароли должны совпадать");
             return;
         }
 
