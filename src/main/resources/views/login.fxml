@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.LoginController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.LoginController">
 
     <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/logo150.png"/>
+        <Image url="@../images/logo150.png" />
     </ImageView>
 
 

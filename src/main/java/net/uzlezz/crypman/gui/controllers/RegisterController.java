@@ -27,6 +27,8 @@ public class RegisterController {
         var request = new Request("user/register", payload);
         var response = ServerClient.getInstance().sendRequest(request);
         ResponseFailureUtils.handle(response);
+
+        StageLoader.load(usernameField.getScene(), StagePath.PORTFOLIO);
     }
 
     @FXML

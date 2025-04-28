@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #121212; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.RegisterController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #121212; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.RegisterController">
 
     <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
         <image>

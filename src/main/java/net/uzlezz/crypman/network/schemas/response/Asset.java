@@ -10,7 +10,5 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Asset implements Serializable {
     private String name;
-    private String friendlyName;
     private BigDecimal amount;
-    private BigDecimal price;
 }

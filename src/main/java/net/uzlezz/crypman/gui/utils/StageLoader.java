@@ -14,7 +14,6 @@ public final class StageLoader {
         var loader = new FXMLLoader(StageLoader.class.getResource(path.getPath()));
         Parent root = loader.load();
 
-        //stage.setResizable(false);
         stage.setScene(new Scene(root));
     }
 

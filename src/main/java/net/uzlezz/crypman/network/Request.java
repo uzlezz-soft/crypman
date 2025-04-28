@@ -14,4 +14,9 @@ public class Request implements Serializable {
 
     private String path;
     private Object payload;
+
+    public Request(String path) {
+        this.path = path;
+        this.payload = null;
+    }
 }
