@@ -10,6 +10,7 @@ import net.uzlezz.crypman.network.schemas.response.Asset;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class AssetListCell extends ListCell<Asset> {
@@ -40,7 +41,8 @@ public class AssetListCell extends ListCell<Asset> {
             controller.getNameLabel().setText(crypto.getFriendlyName());
             controller.getAmountLabel().setText(String.format("%.9f %s", asset.getAmount(), crypto.getName()));
             controller.getPriceLabel().setText("$" + String.format("%.2f", crypto.getPrice().multiply(asset.getAmount())));
-            controller.getSecondaryPriceLabel().setText("$" + String.format("%.2f", crypto.getPrice()));
+            controller.getSecondaryPriceLabel().setText("$" + String.format(crypto.getPrice().compareTo(new BigDecimal("0.001")) < 0 ?
+                    "%.4f" : crypto.getPrice().compareTo(new BigDecimal("0.01")) < 0 ? "%.3f" : "%.2f", crypto.getPrice()));
 
             Image icon = loadIcon(asset.getName());
             controller.getIconView().setImage(icon);

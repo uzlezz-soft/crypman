@@ -2,7 +2,7 @@ package net.uzlezz.crypman;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.uzlezz.crypman.network.schemas.response.Cryptocurrency;
+import net.uzlezz.crypman.gui.data.Cryptocurrency;
 
 import java.util.List;
 
@@ -26,7 +26,11 @@ public class MarketState {
         return null;
     }
 
-    public static void setCryptocurrencyList(List<Cryptocurrency> cryptocurrencies) {
-        getInstance().cryptocurrencies = cryptocurrencies;
+    public static List<Cryptocurrency> getCryptocurrencies() {
+        return getInstance().cryptocurrencies;
+    }
+
+    public static void setCryptocurrencyList(List<net.uzlezz.crypman.network.schemas.response.Cryptocurrency> cryptocurrencies) {
+        getInstance().cryptocurrencies = cryptocurrencies.stream().map(Cryptocurrency::new).toList();
     }
 }

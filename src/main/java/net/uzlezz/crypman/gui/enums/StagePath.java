@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum StagePath {
     LOGIN("/views/login.fxml"),
     REGISTER("/views/register.fxml"),
-    PORTFOLIO("/views/portfolio.fxml");
+    PORTFOLIO("/views/portfolio.fxml"),
+    MARKET_CONTROL("/views/market_control.fxml");
 
     private final String path;
 

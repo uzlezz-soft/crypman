@@ -1,7 +1,9 @@
 package net.uzlezz.crypman.gui.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
@@ -12,6 +14,7 @@ import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.gui.views.AssetListCell;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
+import net.uzlezz.crypman.network.schemas.request.CryptocurrencyRegistration;
 import net.uzlezz.crypman.network.schemas.response.Asset;
 import net.uzlezz.crypman.network.schemas.response.Cryptocurrency;
 import net.uzlezz.crypman.network.schemas.response.Portfolio;
@@ -26,6 +29,8 @@ public class PortfolioController implements Initializable {
     @FXML
     private Label usernameLabel;
     @FXML
+    private Button marketControlButton;
+    @FXML
     private Text totalPriceText;
 
     @FXML
@@ -38,6 +43,10 @@ public class PortfolioController implements Initializable {
         var response = ServerClient.getInstance().sendRequest(new Request("user/getInfo"));
         ResponseFailureUtils.handle(response);
         usernameLabel.setText(((UserInfo)response.getPayload()).getUserName());
+
+        if (((UserInfo)response.getPayload()).getRoles().contains("Admin")) {
+            marketControlButton.setVisible(true);
+        }
 
         refreshPortfolio();
     }
@@ -67,5 +76,9 @@ public class PortfolioController implements Initializable {
     public void onLogoutButtonPressed() {
         ResponseFailureUtils.handle(ServerClient.getInstance().sendRequest(new Request("user/logout")));
         StageLoader.load(usernameLabel.getScene(), StagePath.LOGIN);
+    }
+
+    public void onNewButtonPressed() {
+        StageLoader.load(usernameLabel.getScene(), StagePath.MARKET_CONTROL);
     }
 }

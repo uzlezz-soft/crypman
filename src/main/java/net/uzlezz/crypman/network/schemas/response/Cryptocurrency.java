@@ -1,5 +1,6 @@
 package net.uzlezz.crypman.network.schemas.response;
 
+import javafx.beans.property.StringProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

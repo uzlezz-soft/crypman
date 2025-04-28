@@ -4,11 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.PortfolioController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.PortfolioController">
 
     <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
         <Label fx:id="usernameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
         <Pane HBox.hgrow="ALWAYS" />
+        <Button onAction="#onNewButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Управление" fx:id="marketControlButton" visible="false" />
         <Button onAction="#onRefreshButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Обновить" />
         <Button onAction="#onLogoutButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Выйти" />
     </HBox>
