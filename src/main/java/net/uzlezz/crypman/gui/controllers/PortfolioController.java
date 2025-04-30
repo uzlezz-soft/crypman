@@ -1,6 +1,8 @@
 package net.uzlezz.crypman.gui.controllers;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -52,6 +54,8 @@ public class PortfolioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         assetListView.setCellFactory(listView -> new AssetListCell());
+        assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
+                chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
 
         var response = ServerClient.getInstance().sendRequest(new Request("user/getInfo"));
         ResponseFailureUtils.handle(response);
@@ -128,8 +132,12 @@ public class PortfolioController implements Initializable {
     }
 
     private void populateChart() {
+        populateChart(chartTypeComboBox.getValue());
+    }
+
+    private void populateChart(String cryptoName) {
         Platform.runLater(() -> {
-            var type = chartTypeComboBox.getValue();
+            var type = cryptoName != null ? cryptoName : "BTC";
             var response = ServerClient.getInstance().sendRequest(new Request("market/priceHistory", type));
             ResponseFailureUtils.handle(response);
             populateChart((List<PriceRecord>)response.getPayload());
@@ -146,7 +154,7 @@ public class PortfolioController implements Initializable {
         // Преобразуем и фильтруем
         var filtered = priceRecords.stream()
                 .map(record -> new AbstractMap.SimpleEntry<>(record.getTime().atZone(localZoneId).toEpochSecond(), record.getValue()))
-                .filter(entry -> entry.getKey() >= weekAgoEpoch && entry.getKey() <= nowEpoch)
+                .filter(entry -> entry.getKey() <= nowEpoch)
                 .sorted(Comparator.comparingLong(Map.Entry::getKey))
                 .toList();
 
@@ -158,12 +166,18 @@ public class PortfolioController implements Initializable {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName("История цен");
 
-        // Основные точки
+        BigDecimal minPrice = filtered.get(0).getValue();
+        BigDecimal maxPrice = filtered.get(0).getValue();
+
         for (var entry : filtered) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            BigDecimal value = entry.getValue();
+            series.getData().add(new XYChart.Data<>(entry.getKey(), value));
+
+            if (value.compareTo(minPrice) < 0) minPrice = value;
+            if (value.compareTo(maxPrice) > 0) maxPrice = value;
         }
 
-        // Добавляем "заглушку" в конец, если данных нет на самом правом краю
+        // Добавляем точку справа, если нет данных вплоть до nowEpoch
         Map.Entry<Long, BigDecimal> last = filtered.get(filtered.size() - 1);
         if (last.getKey() < nowEpoch) {
             series.getData().add(new XYChart.Data<>(nowEpoch, last.getValue()));
@@ -172,12 +186,27 @@ public class PortfolioController implements Initializable {
         priceChart.getData().clear();
         priceChart.getData().add(series);
 
-        // Устанавливаем ось X
+        BigDecimal finalMinPrice = minPrice;
+        BigDecimal finalMaxPrice = maxPrice;
         Platform.runLater(() -> {
+            // Ось X
             xAxis.setAutoRanging(false);
             xAxis.setLowerBound(weekAgoEpoch);
             xAxis.setUpperBound(nowEpoch);
             xAxis.setTickUnit((nowEpoch - weekAgoEpoch) / 10.0);
+
+            // Ось Y
+            yAxis.setAutoRanging(false);
+            double minY = Math.max(finalMinPrice.doubleValue(), 0.0);
+            double maxY = finalMaxPrice.doubleValue();
+
+            double padding = (maxY - minY) * 0.1; // 10% от диапазона
+            if (padding == 0) padding = maxY * 0.05; // если значения одинаковы
+
+            yAxis.setLowerBound(minY - padding);
+            yAxis.setUpperBound(maxY + padding);
+            yAxis.setTickUnit((maxY + padding - (minY - padding)) / 10.0);
         });
     }
+
 }
