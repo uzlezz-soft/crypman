@@ -24,13 +24,13 @@ public class Cryptocurrency {
     }
 
     public String getName() { return name.get(); }
-    public StringProperty name() { return name; }
+    public StringProperty nameProperty() { return name; }
 
     public String getFriendlyName() { return friendlyName.get(); }
-    public StringProperty friendlyName() { return friendlyName; }
+    public StringProperty friendlyNameProperty() { return friendlyName; }
 
     public String getIcon() { return icon.get(); }
-    public StringProperty icon() { return icon; }
+    public StringProperty iconProperty() { return icon; }
 
-    public StringProperty price() { return priceProperty; }
+    public StringProperty priceProperty() { return priceProperty; }
 }

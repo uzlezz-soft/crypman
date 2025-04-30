@@ -20,11 +20,11 @@
         </font>
     </Text>
 
-    <TableView fx:id="cryptoTableView" prefWidth="450.0" prefHeight="300.0" layoutX="10" layoutY="10">
+    <TableView fx:id="cryptoTableView" prefWidth="600.0" prefHeight="300.0" layoutX="10" layoutY="10">
         <columns>
             <TableColumn fx:id="nameColumn" text="Идентификатор" prefWidth="150.0"/>
-            <TableColumn fx:id="friendlyNameColumn" text="Имя" prefWidth="150.0"/>
-            <TableColumn fx:id="iconColumn" text="Иконка" prefWidth="150.0"/>
+            <TableColumn fx:id="friendlyNameColumn" text="Имя" prefWidth="200.0"/>
+            <TableColumn fx:id="iconColumn" text="Иконка" prefWidth="200.0"/>
         </columns>
     </TableView>
 

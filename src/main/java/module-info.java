@@ -12,8 +12,10 @@ module net.uzlezz.crypman {
 
     opens net.uzlezz.crypman to javafx.fxml;
     exports net.uzlezz.crypman;
+    exports net.uzlezz.crypman.gui.data;
     exports net.uzlezz.crypman.gui.controllers;
     exports net.uzlezz.crypman.gui.controllers.embedded;
     opens net.uzlezz.crypman.gui.controllers to javafx.fxml;
     opens net.uzlezz.crypman.gui.controllers.embedded to javafx.fxml;
+    opens net.uzlezz.crypman.gui.data to javafx.base;
 }
