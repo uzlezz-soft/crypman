@@ -59,13 +59,14 @@ public class PortfolioController implements Initializable {
 
         var response = ServerClient.getInstance().sendRequest(new Request("user/getInfo"));
         ResponseFailureUtils.handle(response);
-        usernameLabel.setText(((UserInfo)response.getPayload()).getUserName());
+        var userInfo = (UserInfo)response.getPayload();
+        usernameLabel.setText(userInfo.getUserName());
 
-        if (((UserInfo)response.getPayload()).getRoles().contains("Admin")) {
+        if (userInfo.getRoles().contains("Admin")) {
             marketControlButton.setVisible(true);
         }
 
-        xAxis.setTickLabelFormatter(new StringConverter<Number>() {
+        xAxis.setTickLabelFormatter(new StringConverter<>() {
             private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
             @Override

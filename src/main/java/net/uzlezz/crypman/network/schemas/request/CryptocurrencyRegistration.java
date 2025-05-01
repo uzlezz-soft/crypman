@@ -10,4 +10,5 @@ import java.io.Serializable;
 public class CryptocurrencyRegistration implements Serializable {
     private String name;
     private String friendlyName;
+    private String icon;
 }

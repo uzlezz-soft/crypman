@@ -4,28 +4,81 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.MarketControlController">
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<BorderPane style="-fx-background-color: #ebebeb; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.MarketControlController">
 
-    <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
-        <Label fx:id="usernameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-        <Pane HBox.hgrow="ALWAYS" />
-        <Button onAction="#onRefreshButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Обновить" />
-        <Button onAction="#onBackButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Назад" />
-    </HBox>
-    <Separator prefWidth="600" style="-fx-background-color: #b5b5b5;" />
+    <top>
+        <VBox spacing="5.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+                <Label fx:id="usernameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#onRefreshButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Обновить" />
+                <Button onAction="#onBackButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Портфель" />
+            </HBox>
+            <Separator prefWidth="600" style="-fx-background-color: #b5b5b5;" />
+        </VBox>
+    </top>
 
-    <Text style="-fx-fill: #1f1f1f;" text="Управление рынком">
-        <font>
-            <Font name="Helvetica Neue" size="24" />
-        </font>
-    </Text>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20" VBox.vgrow="ALWAYS">
+            <Text style="-fx-fill: #1f1f1f;" text="Управление рынком">
+                <font>
+                    <Font name="Helvetica Neue" size="24" />
+                </font>
+            </Text>
 
-    <TableView fx:id="cryptoTableView" prefWidth="600.0" prefHeight="300.0" layoutX="10" layoutY="10">
-        <columns>
-            <TableColumn fx:id="nameColumn" text="Идентификатор" prefWidth="150.0"/>
-            <TableColumn fx:id="friendlyNameColumn" text="Имя" prefWidth="200.0"/>
-            <TableColumn fx:id="iconColumn" text="Иконка" prefWidth="200.0"/>
-        </columns>
-    </TableView>
+            <SplitPane dividerPositions="0.6" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+                <SplitPane dividerPositions="0.3" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="cryptoTableView" prefWidth="600.0" prefHeight="300.0" layoutX="10" layoutY="10">
+                        <columns>
+                            <TableColumn fx:id="nameColumn" text="Идентификатор" prefWidth="150.0"/>
+                            <TableColumn fx:id="friendlyNameColumn" text="Имя" prefWidth="200.0"/>
+                            <TableColumn fx:id="iconColumn" text="Иконка" prefWidth="200.0"/>
+                        </columns>
+                    </TableView>
 
-</VBox>
+                    <LineChart fx:id="priceChart" animated="false" createSymbols="false" legendVisible="false" VBox.vgrow="ALWAYS">
+                        <xAxis>
+                            <NumberAxis label="Время" fx:id="xAxis" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis fx:id="yAxis" label="Стоимость" />
+                        </yAxis>
+                    </LineChart>
+                </SplitPane>
+
+                <TabPane prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                    <Tab text="Добавить">
+                        <VBox spacing="10" alignment="TOP_LEFT" style="-fx-padding: 10;">
+                            <TextField fx:id="addNameField" promptText="Идентификатор" />
+                            <TextField fx:id="addFriendlyNameField" promptText="Имя" />
+                            <TextField fx:id="addIconField" promptText="Иконка" />
+                            <Button text="Добавить" onAction="#onAddButtonPressed" />
+                        </VBox>
+                    </Tab>
+
+                    <Tab text="Изменить">
+                        <VBox spacing="10" alignment="TOP_LEFT" style="-fx-padding: 10;">
+                            <TextField fx:id="editNameField" promptText="Идентификатор" />
+                            <TextField fx:id="editFriendlyNameField" promptText="Имя" />
+                            <TextField fx:id="editIconField" promptText="Иконка" />
+                            <Button text="Сохранить изменения" onAction="#onEditButtonPressed" />
+                        </VBox>
+                    </Tab>
+
+                    <Tab text="Управление ценой">
+                        <VBox spacing="10" alignment="TOP_LEFT" style="-fx-padding: 10;">
+                            <TextField fx:id="priceField" promptText="Цена" />
+                            <DatePicker fx:id="priceDatePicker" promptText="Дата" />
+                            <TextField fx:id="priceTimeField" promptText="HH:mm:ss" />
+                            <Button text="Зарегистрировать" onAction="#onRegisterPriceButtonPressed" />
+                            <Separator style="-fx-background-color: #b5b5b5;" />
+                            <Button text="Загрузить из CSV" onAction="#loadPriceCSVButtonPressed" />
+                        </VBox>
+                    </Tab>
+                </TabPane>
+            </SplitPane>
+        </VBox>
+    </center>
+</BorderPane>
