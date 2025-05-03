@@ -17,5 +17,6 @@ module net.uzlezz.crypman {
     exports net.uzlezz.crypman.gui.controllers.embedded;
     opens net.uzlezz.crypman.gui.controllers to javafx.fxml;
     opens net.uzlezz.crypman.gui.controllers.embedded to javafx.fxml;
+    opens net.uzlezz.crypman.gui.controllers.dialogs to javafx.fxml;
     opens net.uzlezz.crypman.gui.data to javafx.base;
 }

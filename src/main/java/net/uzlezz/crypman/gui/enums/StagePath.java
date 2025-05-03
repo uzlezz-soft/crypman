@@ -7,7 +7,9 @@ public enum StagePath {
     LOGIN("/views/login.fxml"),
     REGISTER("/views/register.fxml"),
     PORTFOLIO("/views/portfolio.fxml"),
-    MARKET_CONTROL("/views/market_control.fxml");
+    MARKET_CONTROL("/views/market_control.fxml"),
+
+    ADD_MONEY_DIALOG("/views/dialogs/add_money.fxml");
 
     private final String path;
 

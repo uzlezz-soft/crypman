@@ -64,6 +64,8 @@
                             <TextField fx:id="editFriendlyNameField" promptText="Имя" />
                             <TextField fx:id="editIconField" promptText="Иконка" />
                             <Button text="Сохранить изменения" onAction="#onEditButtonPressed" />
+                            <Separator style="-fx-background-color: #b5b5b5;" />
+                            <Button text="Удалить криптовалюту" onAction="#onDeleteButtonPressed" />
                         </VBox>
                     </Tab>
 
@@ -74,7 +76,10 @@
                             <TextField fx:id="priceTimeField" promptText="HH:mm:ss" />
                             <Button text="Зарегистрировать" onAction="#onRegisterPriceButtonPressed" />
                             <Separator style="-fx-background-color: #b5b5b5;" />
-                            <Button text="Загрузить из CSV" onAction="#loadPriceCSVButtonPressed" />
+                            <HBox>
+                                <Button text="Загрузить из CSV" onAction="#loadPriceCSVButtonPressed" />
+                                <Button text="?" onAction="#loadPriceCSVHelpButtonPressed" />
+                            </HBox>
                         </VBox>
                     </Tab>
                 </TabPane>

@@ -20,8 +20,8 @@
 
     <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
 
-    <TextField fx:id="usernameField" maxWidth="300" promptText="username" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
-    <PasswordField fx:id="passwordField" maxWidth="300" promptText="password" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <TextField fx:id="usernameField" maxWidth="300" promptText="Имя пользователя" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <PasswordField fx:id="passwordField" maxWidth="300" promptText="Пароль" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
 
     <Button maxWidth="200" onAction="#onLoginButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Войти" />
 

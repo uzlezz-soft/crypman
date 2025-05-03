@@ -5,26 +5,32 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import net.uzlezz.crypman.MarketState;
+import net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController;
 import net.uzlezz.crypman.gui.enums.StagePath;
+import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.gui.views.AssetListCell;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
+import net.uzlezz.crypman.network.schemas.request.Deposit;
 import net.uzlezz.crypman.network.schemas.response.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.Instant;
@@ -35,10 +41,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class PortfolioController implements Initializable {
-    public ComboBox<String> chartTypeComboBox;
-    public LineChart<Number, Number> priceChart;
-    public NumberAxis xAxis;
-    public NumberAxis yAxis;
+    @FXML
+    private Label balanceLabel;
+    @FXML
+    private  ComboBox<String> chartTypeComboBox;
+    @FXML
+    private  LineChart<Number, Number> priceChart;
+    @FXML
+    private  NumberAxis xAxis;
+    @FXML
+    private  NumberAxis yAxis;
     @FXML
     private Label usernameLabel;
     @FXML
@@ -57,14 +69,7 @@ public class PortfolioController implements Initializable {
         assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
                 chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
 
-        var response = ServerClient.getInstance().sendRequest(new Request("user/getInfo"));
-        ResponseFailureUtils.handle(response);
-        var userInfo = (UserInfo)response.getPayload();
-        usernameLabel.setText(userInfo.getUserName());
-
-        if (userInfo.getRoles().contains("Admin")) {
-            marketControlButton.setVisible(true);
-        }
+        updateUserInfo();
 
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -84,6 +89,20 @@ public class PortfolioController implements Initializable {
         });
 
         refreshPortfolio();
+    }
+
+    private void updateUserInfo() {
+
+        var response = ServerClient.getInstance().sendRequest(new Request("user/getInfo"));
+        ResponseFailureUtils.handle(response);
+        var userInfo = (UserInfo)response.getPayload();
+        usernameLabel.setText(userInfo.getUserName());
+
+        if (userInfo.getRoles().contains("Admin")) {
+            marketControlButton.setVisible(true);
+        }
+
+        balanceLabel.setText(String.format("$%.2f", userInfo.getBalance()));
     }
 
     public void onRefreshButtonPressed() {
@@ -120,8 +139,10 @@ public class PortfolioController implements Initializable {
     }
 
     public void onLogoutButtonPressed() {
-        ResponseFailureUtils.handle(ServerClient.getInstance().sendRequest(new Request("user/logout")));
-        StageLoader.load(usernameLabel.getScene(), StagePath.LOGIN);
+        if (AlertUtils.showConfirmation("Вы действительно хотите выйти?", "") == ButtonType.OK) {
+            ResponseFailureUtils.handle(ServerClient.getInstance().sendRequest(new Request("user/logout")));
+            StageLoader.load(usernameLabel.getScene(), StagePath.LOGIN);
+        }
     }
 
     public void onNewButtonPressed() {
@@ -210,4 +231,34 @@ public class PortfolioController implements Initializable {
         });
     }
 
+    public void addMoneyButtonPressed() {
+        Stage dialog = new Stage();
+
+        var loader = new FXMLLoader(StageLoader.class.getResource(StagePath.ADD_MONEY_DIALOG.getPath()));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertUtils.showError("Ошибка", "");
+            return;
+        }
+
+        dialog.setScene(new Scene(root));
+        dialog.setTitle("Пополнение баланса");
+        dialog.centerOnScreen();
+
+        dialog.initOwner(usernameLabel.getScene().getWindow());
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.showAndWait();
+
+        var controller = (AddMoneyDialogController)loader.getController();
+        if (!controller.isCancelled()) {
+            var payload = new Deposit(controller.getMoneyAmount());
+            var response = ServerClient.getInstance().sendRequest(new Request("user/deposit", payload));
+            ResponseFailureUtils.handle(response);
+
+            updateUserInfo();
+        }
+    }
 }

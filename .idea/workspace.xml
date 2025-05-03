@@ -5,8 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861b179b-bb84-4de6-9ec0-e1ff59e9d88d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AddMoneyDialogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/CryptocurrencyDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/CryptocurrencyEdit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/Deposit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/add_money.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Crypman/Crypman.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetListCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetListCell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/register.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +31,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Enum" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -47,6 +62,8 @@
   &quot;keyToString&quot;: {
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
     &quot;Application.Run.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.apache.maven.plugins:maven-resources-plugin:2.6:resources].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,

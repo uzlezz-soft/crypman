@@ -11,8 +11,10 @@
         <VBox spacing="5">
             <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
                 <Label fx:id="usernameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                <Label fx:id="balanceLabel" style="-fx-font-size: 14px;" />
                 <Pane HBox.hgrow="ALWAYS" />
                 <Button fx:id="marketControlButton" onAction="#onNewButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" text="Управление" visible="false" />
+                <Button text="Пополнить баланс" onAction="#addMoneyButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" />
                 <Button onAction="#onRefreshButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" text="Обновить" />
                 <Button onAction="#onLogoutButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" text="Выйти" />
             </HBox>

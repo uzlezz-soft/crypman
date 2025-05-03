@@ -22,10 +22,8 @@ import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
-import net.uzlezz.crypman.network.schemas.request.CryptocurrencyRegistration;
-import net.uzlezz.crypman.network.schemas.request.NewPriceRecord;
+import net.uzlezz.crypman.network.schemas.request.*;
 import net.uzlezz.crypman.gui.data.Cryptocurrency;
-import net.uzlezz.crypman.network.schemas.request.NewPriceRecordList;
 import net.uzlezz.crypman.network.schemas.response.PriceRecord;
 import net.uzlezz.crypman.network.schemas.response.UserInfo;
 
@@ -116,8 +114,13 @@ public class MarketControlController implements Initializable {
             }
         });
 
-        cryptoTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldCrypto, newCrypto) ->
-                populateChart(newCrypto.getName()));
+        cryptoTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldCrypto, newCrypto) -> {
+            if (newCrypto == null) return;
+            editNameField.setText(newCrypto.getName());
+            editFriendlyNameField.setText(newCrypto.getFriendlyName());
+            editIconField.setText(newCrypto.getIcon());
+            populateChart(newCrypto.getName());
+        });
     }
 
     private void refreshCryptoList() {
@@ -252,6 +255,36 @@ public class MarketControlController implements Initializable {
     }
 
     public void onEditButtonPressed() {
+        var crypto = cryptoTableView.getSelectionModel().getSelectedItem();
+        if (crypto == null) {
+            AlertUtils.showError("Ошибка", "Выберите криптовалюту из таблицы");
+            return;
+        }
+
+        if (editNameField.getText().isEmpty()) {
+            AlertUtils.showError("Ошибка", "Поле 'Идентификатор' должно быть заполнено");
+            return;
+        }
+        if (editFriendlyNameField.getText().isEmpty()) {
+            AlertUtils.showError("Ошибка", "Поле 'Имя' должно быть заполнено");
+            return;
+        }
+        if (editIconField.getText().isEmpty()) {
+            AlertUtils.showError("Ошибка", "Поле 'Иконка' должно быть заполнено");
+            return;
+        }
+
+        var payload = new CryptocurrencyEdit(crypto.getName(),
+                editNameField.getText(), editFriendlyNameField.getText(), editIconField.getText());
+        if (AlertUtils.showConfirmation("Подтвердите действие",
+                String.format("Вы действительно хотите изменить криптовалюту %s (%s) с иконкой %s на криптовалюту %s (%s) с иконкой %s?",
+                        crypto.getFriendlyName(), crypto.getName(), crypto.getIcon(),
+                        payload.getNewName(), payload.getNewFriendlyName(), payload.getNewIcon())) == ButtonType.OK) {
+            var response = ServerClient.getInstance().sendRequest(new Request("market/edit", payload));
+            ResponseFailureUtils.handle(response);
+
+            refreshCryptoList();
+        }
     }
 
     public void onRegisterPriceButtonPressed() {
@@ -319,6 +352,28 @@ public class MarketControlController implements Initializable {
             ResponseFailureUtils.handle(response);
 
             populateChart(records.get(0).getCryptoName());
+        }
+    }
+
+    public void loadPriceCSVHelpButtonPressed() {
+        AlertUtils.showInformation("Загрузка CSV", "Выберите .csv-файл в следующем формате: дата и время, цена.");
+    }
+
+    public void onDeleteButtonPressed(ActionEvent actionEvent) {
+        var crypto = cryptoTableView.getSelectionModel().getSelectedItem();
+        if (crypto == null) {
+            AlertUtils.showError("Ошибка", "Выберите криптовалюту из таблицы");
+            return;
+        }
+
+        if (AlertUtils.showConfirmation("Подтвердите действие",
+                String.format("Вы действительнр хотите удалить криптовалюту %s (%s)?", crypto.getFriendlyName(), crypto.getName())) == ButtonType.OK) {
+            if (AlertUtils.showConfirmation("Подтвердите действие", "Это действие необратимо и удалит активы данной криптовалюты из всех портфелей! Продолжить?")
+                == ButtonType.OK) {
+                var payload = new CryptocurrencyDelete(crypto.getName());
+                var response = ServerClient.getInstance().sendRequest(new Request("market/delete", payload));
+                ResponseFailureUtils.handle(response);
+            }
         }
     }
 }

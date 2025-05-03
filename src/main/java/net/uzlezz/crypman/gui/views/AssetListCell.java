@@ -44,13 +44,13 @@ public class AssetListCell extends ListCell<Asset> {
             controller.getSecondaryPriceLabel().setText("$" + String.format(crypto.getPrice().compareTo(new BigDecimal("0.001")) < 0 ?
                     "%.4f" : crypto.getPrice().compareTo(new BigDecimal("0.01")) < 0 ? "%.3f" : "%.2f", crypto.getPrice()));
 
-            Image icon = loadIcon(asset.getName());
+            Image icon = loadIcon(crypto.getIcon());
             controller.getIconView().setImage(icon);
         }
     }
 
     private Image loadIcon(String assetName) {
-        String path = "/images/crypto/" + assetName.toLowerCase() + ".png";
+        String path = "/images/crypto/" + assetName.toLowerCase();
         InputStream stream = getClass().getResourceAsStream(path);
         return stream != null ? new Image(stream) : new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/crypto/default.png")));
     }
