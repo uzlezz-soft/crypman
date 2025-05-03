@@ -3,7 +3,6 @@ package net.uzlezz.crypman.gui.controllers;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
@@ -11,6 +10,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
@@ -24,6 +24,7 @@ import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
 import net.uzlezz.crypman.network.schemas.request.*;
 import net.uzlezz.crypman.gui.data.Cryptocurrency;
+import net.uzlezz.crypman.gui.data.Log;
 import net.uzlezz.crypman.network.schemas.response.PriceRecord;
 import net.uzlezz.crypman.network.schemas.response.UserInfo;
 
@@ -34,47 +35,70 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.function.Function;
 
 public class MarketControlController implements Initializable {
+    @FXML
+    private TabPane mainTabPane;
+    @FXML
+    private ComboBox<Integer> numLogsComboBox;
+    @FXML
+    private TableView<Log> logsTableView;
+    @FXML
+    private TableColumn<Log, LocalDateTime> logDateColumn;
+    @FXML
+    private TableColumn<Log, String> logUserColumn;
+    @FXML
+    private TableColumn<Log, String> logInfoColumn;
+
     @FXML
     private LineChart priceChart;
     @FXML
     private NumberAxis xAxis;
     @FXML
     private NumberAxis yAxis;
+
     @FXML
     private TextField priceField;
     @FXML
     private DatePicker priceDatePicker;
     @FXML
     private TextField priceTimeField;
+
     @FXML
     private TextField addNameField;
     @FXML
     private TextField addFriendlyNameField;
     @FXML
     private TextField addIconField;
+
     @FXML
     private TextField editNameField;
     @FXML
     private TextField editFriendlyNameField;
     @FXML
     private TextField editIconField;
-    @FXML
-    private TableColumn<Cryptocurrency, String> nameColumn;
+
     @FXML
     private TableView<Cryptocurrency> cryptoTableView;
     @FXML
-    private TableColumn<Cryptocurrency, String> friendlyNameColumn;
+    private TableColumn<Cryptocurrency, String> cryptoNameColumn;
     @FXML
-    private TableColumn<Cryptocurrency, String> iconColumn;
+    private TableColumn<Cryptocurrency, String> cryptoFriendlyNameColumn;
+    @FXML
+    private TableColumn<Cryptocurrency, String> cryptoIconColumn;
+
     @FXML
     private Label usernameLabel;
 
     private final ObservableList<Cryptocurrency> cryptocurrencies = FXCollections.observableArrayList();
+    private final ObservableList<Log> logs = FXCollections.observableArrayList();
+
+    private static final DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final ZoneId localZoneId = ZoneId.systemDefault();
-    private FileChooser csvFileChooser;
+    private FileChooser priceCsvFileChooser;
+    private FileChooser logsFileChooser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,14 +112,39 @@ public class MarketControlController implements Initializable {
             StageLoader.load(usernameLabel.getScene(), StagePath.PORTFOLIO);
         }
 
-        csvFileChooser = new FileChooser();
-        csvFileChooser.setTitle("Выбор файла с ценами");
-        csvFileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        priceCsvFileChooser = new FileChooser();
+        priceCsvFileChooser.setTitle("Выбор файла с ценами");
+        priceCsvFileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        friendlyNameColumn.setCellValueFactory(new PropertyValueFactory<>("friendlyName"));
-        iconColumn.setCellValueFactory(new PropertyValueFactory<>("icon"));
+        logsFileChooser = new FileChooser();
+        logsFileChooser.setTitle("Файл с логами");
+        logsFileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"),
+                new FileChooser.ExtensionFilter("TXT", "*.txt"));
+
+        cryptoNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        cryptoFriendlyNameColumn.setCellValueFactory(new PropertyValueFactory<>("friendlyName"));
+        cryptoIconColumn.setCellValueFactory(new PropertyValueFactory<>("icon"));
         cryptoTableView.setItems(cryptocurrencies);
+
+        logDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        logDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<>() {
+            @Override
+            public String toString(LocalDateTime o) {
+                return logFormatter.format(o);
+            }
+
+            @Override
+            public LocalDateTime fromString(String s) {
+                // not needed
+                return null;
+            }
+        }));
+        logUserColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        logInfoColumn.setCellValueFactory(new PropertyValueFactory<>("info"));
+        logsTableView.setItems(logs);
+
+        numLogsComboBox.getItems().addAll(100, 500, 1000);
+        numLogsComboBox.getSelectionModel().selectFirst();
 
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -121,6 +170,15 @@ public class MarketControlController implements Initializable {
             editIconField.setText(newCrypto.getIcon());
             populateChart(newCrypto.getName());
         });
+
+        refreshLogs();
+    }
+
+    private void refreshLogs() {
+        var response = ServerClient.getInstance().sendRequest(new Request("system/logs", 100));
+        ResponseFailureUtils.handle(response);
+        logs.setAll(((List<net.uzlezz.crypman.network.schemas.response.Log>) response.getPayload()).stream()
+                .map(Log::new).toList());
     }
 
     private void refreshCryptoList() {
@@ -214,6 +272,7 @@ public class MarketControlController implements Initializable {
     public void onRefreshButtonPressed() {
         refreshCryptoList();
         populateChart();
+        refreshLogs();
     }
 
     public void onBackButtonPressed() {
@@ -324,7 +383,7 @@ public class MarketControlController implements Initializable {
             return;
         }
 
-        var file = csvFileChooser.showOpenDialog(usernameLabel.getScene().getWindow());
+        var file = priceCsvFileChooser.showOpenDialog(usernameLabel.getScene().getWindow());
         if (file == null) return;
 
         List<NewPriceRecord> records;
@@ -359,7 +418,7 @@ public class MarketControlController implements Initializable {
         AlertUtils.showInformation("Загрузка CSV", "Выберите .csv-файл в следующем формате: дата и время, цена.");
     }
 
-    public void onDeleteButtonPressed(ActionEvent actionEvent) {
+    public void onDeleteButtonPressed() {
         var crypto = cryptoTableView.getSelectionModel().getSelectedItem();
         if (crypto == null) {
             AlertUtils.showError("Ошибка", "Выберите криптовалюту из таблицы");
@@ -373,7 +432,50 @@ public class MarketControlController implements Initializable {
                 var payload = new CryptocurrencyDelete(crypto.getName());
                 var response = ServerClient.getInstance().sendRequest(new Request("market/delete", payload));
                 ResponseFailureUtils.handle(response);
+
+                refreshCryptoList();
             }
+        }
+    }
+
+    private List<net.uzlezz.crypman.network.schemas.response.Log> receiveLogs() {
+        var numLogs = numLogsComboBox.getSelectionModel().getSelectedItem();
+
+        var response = ServerClient.getInstance().sendRequest(new Request("system/logs", numLogs));
+        ResponseFailureUtils.handle(response);
+        return (List<net.uzlezz.crypman.network.schemas.response.Log>) response.getPayload();
+    }
+
+    private static String formatLogRecordCsv(net.uzlezz.crypman.network.schemas.response.Log log) {
+        return String.format("%s,\"%s\",\"%s\"\n", logFormatter.format(log.getDateTime()), log.getUserName(), log.getInfo());
+    }
+
+    private static String formatLogRecordTxt(net.uzlezz.crypman.network.schemas.response.Log log) {
+        return String.format("[%s] [%s] %s\n", logFormatter.format(log.getDateTime()), log.getUserName(), log.getInfo());
+    }
+
+    public void onExportLogsButtonPressed() {
+        var logs = receiveLogs();
+
+        var file = logsFileChooser.showSaveDialog(usernameLabel.getScene().getWindow());
+        if (file == null) return;
+
+        Function<net.uzlezz.crypman.network.schemas.response.Log, String> formatter = file.getAbsolutePath().endsWith(".csv")
+                ? MarketControlController::formatLogRecordCsv : MarketControlController::formatLogRecordTxt;
+
+        try (var writer = new BufferedWriter(new FileWriter(file))) {
+            logs.stream()
+                    .sorted(Comparator.comparing(net.uzlezz.crypman.network.schemas.response.Log::getDateTime))
+                    .map(formatter)
+                    .forEach(str -> {
+                try {
+                    writer.write(str);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

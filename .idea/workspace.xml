@@ -5,23 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861b179b-bb84-4de6-9ec0-e1ff59e9d88d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AddMoneyDialogController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/CryptocurrencyDelete.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/CryptocurrencyEdit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/Deposit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/add_money.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/data/Log.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/Log.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Crypman/Crypman.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetListCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetListCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/UserInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/views/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/register.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,5 +97,16 @@
       <updated>1742573194644</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
