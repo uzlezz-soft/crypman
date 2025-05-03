@@ -217,6 +217,7 @@ public class MarketControlController implements Initializable {
         StageLoader.load(usernameLabel.getScene(), StagePath.PORTFOLIO);
     }
 
+    // TODO: load images from server
     private Image loadIcon(String assetName) {
         String path = "/images/crypto/" + assetName.toLowerCase() + ".png";
         InputStream stream = getClass().getResourceAsStream(path);
