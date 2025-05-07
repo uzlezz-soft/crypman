@@ -3,6 +3,7 @@ package net.uzlezz.crypman.gui.controllers;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -189,7 +190,7 @@ public class MarketControlController implements Initializable {
             userControlGroup.setDisable(false);
             selectedUserNameLabel.setText(newUser.getName());
             selectedUserBalanceLabel.setText("$" + newUser.getBalance());
-
+            userAccountStatusControlButton.setText(newUser.getStatus().equals("Заморожен") ? "Разморозить" : "Заморозить");
         });
 
         logDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -546,6 +547,21 @@ public class MarketControlController implements Initializable {
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void onUserFreezeButtonPressed() {
+        var user = usersTableView.getSelectionModel().getSelectedItem();
+        if (user == null) {
+            AlertUtils.showError("Ошибка", "Выберите пользователя из таблицы");
+            return;
+        }
+
+        if (AlertUtils.showConfirmation("Подтвердите действие", String.format("Вы действительно хотите %s пользователя %s?",
+                user.getStatus().equals("Заморожен") ? "разморозить" : "заморозить", user.getName())) == ButtonType.OK) {
+            var response = ServerClient.getInstance().sendRequest(new Request("system/toggleFreeze", user.getName()));
+            ResponseFailureUtils.handle(response);
+            refreshUsers();
         }
     }
 }

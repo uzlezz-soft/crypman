@@ -110,7 +110,7 @@
                                     </HBox>
                                     <Separator />
                                     <Group fx:id="userControlGroup" disable="true">
-                                        <Button fx:id="userAccountStatusControlButton" text="Заморозить" />
+                                        <Button fx:id="userAccountStatusControlButton" text="Заморозить" onAction="#onUserFreezeButtonPressed" />
                                     </Group>
                                 </VBox>
                             </top>

@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861b179b-bb84-4de6-9ec0-e1ff59e9d88d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/data/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" afterDir="false" />
