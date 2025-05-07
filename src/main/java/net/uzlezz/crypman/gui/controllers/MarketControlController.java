@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -15,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import net.uzlezz.crypman.MarketState;
+import net.uzlezz.crypman.gui.data.User;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.CSVReader;
@@ -40,6 +42,24 @@ import java.util.function.Function;
 public class MarketControlController implements Initializable {
     @FXML
     private TabPane mainTabPane;
+    @FXML
+    private Tab tabCrypto;
+    @FXML
+    private Tab tabUsers;
+    @FXML
+    private Tab tabSystem;
+
+    @FXML
+    private TableView<User> usersTableView;
+    @FXML
+    private TableColumn<User, String> userNameColumn;
+    @FXML
+    private TableColumn<User, String> userBalanceColumn;
+    @FXML
+    private TableColumn<User, String> userRoleColumn;
+    @FXML
+    private TableColumn<User, String> userStatusColumn;
+
     @FXML
     private ComboBox<Integer> numLogsComboBox;
     @FXML
@@ -89,9 +109,19 @@ public class MarketControlController implements Initializable {
     private TableColumn<Cryptocurrency, String> cryptoIconColumn;
 
     @FXML
+    private Label selectedUserNameLabel;
+    @FXML
+    private Label selectedUserBalanceLabel;
+    @FXML
+    private Group userControlGroup;
+    @FXML
+    private Button userAccountStatusControlButton;
+
+    @FXML
     private Label usernameLabel;
 
     private final ObservableList<Cryptocurrency> cryptocurrencies = FXCollections.observableArrayList();
+    private final ObservableList<User> users = FXCollections.observableArrayList();
     private final ObservableList<Log> logs = FXCollections.observableArrayList();
 
     private static final DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -112,6 +142,19 @@ public class MarketControlController implements Initializable {
             StageLoader.load(usernameLabel.getScene(), StagePath.PORTFOLIO);
         }
 
+        tabCrypto.setOnSelectionChanged(e -> {
+            if (tabCrypto.isSelected()) {
+                refreshCryptoList();
+                populateChart();
+            }
+        });
+        tabUsers.setOnSelectionChanged(e -> {
+            if (tabUsers.isSelected()) refreshUsers();
+        });
+        tabSystem.setOnSelectionChanged(e -> {
+            if (tabSystem.isSelected()) refreshLogs();
+        });
+
         priceCsvFileChooser = new FileChooser();
         priceCsvFileChooser.setTitle("Выбор файла с ценами");
         priceCsvFileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
@@ -125,6 +168,29 @@ public class MarketControlController implements Initializable {
         cryptoFriendlyNameColumn.setCellValueFactory(new PropertyValueFactory<>("friendlyName"));
         cryptoIconColumn.setCellValueFactory(new PropertyValueFactory<>("icon"));
         cryptoTableView.setItems(cryptocurrencies);
+        cryptoTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldCrypto, newCrypto) -> {
+            if (newCrypto == null) return;
+            editNameField.setText(newCrypto.getName());
+            editFriendlyNameField.setText(newCrypto.getFriendlyName());
+            editIconField.setText(newCrypto.getIcon());
+            populateChart(newCrypto.getName());
+        });
+
+        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        userBalanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        userRoleColumn.setCellValueFactory(new PropertyValueFactory<>("roles"));
+        userStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        usersTableView.setItems(users);
+        usersTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldUser, newUser) -> {
+            if (newUser == null) {
+                userControlGroup.setDisable(true);
+                return;
+            }
+            userControlGroup.setDisable(false);
+            selectedUserNameLabel.setText(newUser.getName());
+            selectedUserBalanceLabel.setText("$" + newUser.getBalance());
+
+        });
 
         logDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         logDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<>() {
@@ -162,16 +228,13 @@ public class MarketControlController implements Initializable {
                 return 0;
             }
         });
+    }
 
-        cryptoTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldCrypto, newCrypto) -> {
-            if (newCrypto == null) return;
-            editNameField.setText(newCrypto.getName());
-            editFriendlyNameField.setText(newCrypto.getFriendlyName());
-            editIconField.setText(newCrypto.getIcon());
-            populateChart(newCrypto.getName());
-        });
-
-        refreshLogs();
+    private void refreshUsers() {
+        var response = ServerClient.getInstance().sendRequest(new Request("system/users", 100));
+        ResponseFailureUtils.handle(response);
+        users.setAll(((List<net.uzlezz.crypman.network.schemas.response.User>) response.getPayload()).stream()
+                .map(User::new).toList());
     }
 
     private void refreshLogs() {
@@ -270,9 +333,16 @@ public class MarketControlController implements Initializable {
     }
 
     public void onRefreshButtonPressed() {
-        refreshCryptoList();
-        populateChart();
-        refreshLogs();
+        if (tabCrypto.isSelected()) {
+            refreshCryptoList();
+            populateChart();
+        }
+        if (tabUsers.isSelected()) {
+            refreshUsers();
+        }
+        if (tabSystem.isSelected()) {
+            refreshLogs();
+        }
     }
 
     public void onBackButtonPressed() {

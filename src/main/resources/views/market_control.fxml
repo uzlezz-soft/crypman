@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.Group?>
 <BorderPane style="-fx-background-color: #ebebeb; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.MarketControlController">
 
     <top>
@@ -29,7 +30,7 @@
 
             <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="mainTabPane">
 
-                <Tab text="Криптовалюта">
+                <Tab fx:id="tabCrypto" text="Криптовалюта">
                     <SplitPane dividerPositions="0.6" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
                         <SplitPane dividerPositions="0.3" orientation="VERTICAL" VBox.vgrow="ALWAYS">
                             <TableView fx:id="cryptoTableView" layoutX="10" layoutY="10" prefHeight="300.0" prefWidth="600.0">
@@ -88,20 +89,46 @@
                     </SplitPane>
                 </Tab>
 
-                <Tab text="Пользователи">
+                <Tab fx:id="tabUsers" text="Пользователи">
+                    <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="usersTableView" layoutX="10" layoutY="10" prefHeight="300.0" prefWidth="750.0" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="userNameColumn" prefWidth="300.0" text="Имя" />
+                                <TableColumn fx:id="userBalanceColumn" prefWidth="100.0" text="Баланс" />
+                                <TableColumn fx:id="userRoleColumn" prefWidth="150.0" text="Роли" />
+                                <TableColumn fx:id="userStatusColumn" prefWidth="200.0" text="Статус" />
+                            </columns>
+                        </TableView>
+
+                        <BorderPane VBox.vgrow="ALWAYS">
+                            <top>
+                                <VBox>
+                                    <HBox>
+                                        <Label fx:id="selectedUserNameLabel" style="-fx-font-size: 16px" text="[имя]" />
+                                        <Pane HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="selectedUserBalanceLabel" style="-fx-font-size: 14px" text="[баланс]" />
+                                    </HBox>
+                                    <Separator />
+                                    <Group fx:id="userControlGroup" disable="true">
+                                        <Button fx:id="userAccountStatusControlButton" text="Заморозить" />
+                                    </Group>
+                                </VBox>
+                            </top>
+                        </BorderPane>
+                    </SplitPane>
                 </Tab>
 
-                <Tab text="Система">
+                <Tab fx:id="tabSystem" text="Система">
                     <VBox VBox.vgrow="ALWAYS">
                         <HBox>
                             <ComboBox fx:id="numLogsComboBox" prefWidth="90" />
                             <Button onAction="#onExportLogsButtonPressed" text="Экспортировать" />
                         </HBox>
 
-                        <TableView fx:id="logsTableView" layoutX="10" layoutY="10" prefHeight="300" prefWidth="600" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="logsTableView" layoutX="10" layoutY="10" prefHeight="300" prefWidth="700" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="logDateColumn" prefWidth="100.0" text="Дата" />
-                                <TableColumn fx:id="logUserColumn" prefWidth="100.0" text="Пользователь" />
+                                <TableColumn fx:id="logDateColumn" prefWidth="150.0" text="Дата" />
+                                <TableColumn fx:id="logUserColumn" prefWidth="150.0" text="Пользователь" />
                                 <TableColumn fx:id="logInfoColumn" prefWidth="400.0" text="Информация" />
                             </columns>
                         </TableView>
