@@ -31,10 +31,10 @@ public class CrypmanApplication extends Application {
         var client = ServerClient.getInstance();
         if (client == null) return;
 
-        var request = new Request("DISCONNECT", null);
+        var request = new Request("DISCONNECT");
         var response = client.sendRequest(request);
 
-        if (response.getStatus() == ResponseStatus.OK) {
+        if (response != null && response.getStatus() == ResponseStatus.OK) {
             System.out.println("Disconnected successfully from the server");
         }
         client.disconnect();

@@ -12,7 +12,10 @@ import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
 import net.uzlezz.crypman.network.schemas.request.UserLogin;
 
-public class LoginController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginController implements Initializable {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
 
@@ -28,5 +31,11 @@ public class LoginController {
     @FXML
     public void onRegButtonPressed() {
         StageLoader.load(usernameField.getScene(), StagePath.REGISTER);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ResponseFailureUtils.handle(ServerClient.getInstance().sendRequest(new Request("portfolio/calculate", 7)));
     }
 }
