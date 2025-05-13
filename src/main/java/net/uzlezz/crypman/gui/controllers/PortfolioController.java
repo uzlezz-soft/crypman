@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import net.uzlezz.crypman.MarketState;
 import net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController;
+import net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
@@ -259,6 +260,38 @@ public class PortfolioController implements Initializable {
             ResponseFailureUtils.handle(response);
 
             updateUserInfo();
+        }
+    }
+
+    public void buyButtonPressed(ActionEvent actionEvent) {Stage dialog = new Stage();
+
+        var loader = new FXMLLoader(StageLoader.class.getResource(StagePath.PURCHASE_ASSETS_DIALOG.getPath()));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertUtils.showError("Ошибка", "");
+            return;
+        }
+        var controller = (AssetPurchaseDialogController)loader.getController();
+
+        dialog.setScene(new Scene(root));
+        dialog.setTitle("Покупка активов");
+        dialog.centerOnScreen();
+
+        controller.getBalanceLabel().setText(balanceLabel.getText());
+
+        dialog.initOwner(usernameLabel.getScene().getWindow());
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.showAndWait();
+
+        if (!controller.isCancelled()) {
+            //var payload = new Deposit(controller.getMoneyAmount());
+            //var response = ServerClient.getInstance().sendRequest(new Request("user/deposit", payload));
+            //ResponseFailureUtils.handle(response);
+
+            //updateUserInfo();
         }
     }
 }

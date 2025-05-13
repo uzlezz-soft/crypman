@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefWidth="800" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController">
+    <center>
+        <VBox style="-fx-padding: 20 20 20 20">
+            <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+                <ListView fx:id="assetListView" />
+                <VBox style="-fx-padding: 5 5 5 5">
+                    <HBox>
+                        <Label fx:id="totalPriceLabel" text="\$0.00" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label fx:id="balanceLabel" text="Баланс: $0.00" />
+                    </HBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
+                        <Label fx:id="totalRiskLabel" text="Риск: 0%" />
+                        <Label fx:id="totalReturnLabel" text="Доходность: 0%" />
+                        <Button text="Посчитать статистику" onAction="#onComputeStatsButtonPressed" />
+                    </VBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
+                        <HBox fx:id="targetReturnHBox">
+                            <HBox fx:id="targetReturnSliderContainer">
+                                <Slider fx:id="targetReturnSlider" min="-9.96578428" max="8.96578428466" />
+                            </HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Label fx:id="targetReturnLabel" text="0%" />
+                        </HBox>
+                        <Button text="Оптимизировать под % дохода" onAction="#onOptimizeForTargetReturnButtonPressed" />
+                    </VBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
+                        <Button text="Оптимизировать под минимальный риск" onAction="#onOptimizeForMinRiskButtonPressed" />
+                    </VBox>
+                </VBox>
+            </SplitPane>
+            <Button onAction="#onConfirmButtonPressed" text="Подтвердить" />
+        </VBox>
+    </center>
+</BorderPane>
