@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefWidth="800" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AssetSellDialogController">
+    <center>
+        <VBox style="-fx-padding: 20 20 20 20">
+            <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+                <ListView fx:id="assetListView" />
+                <VBox style="-fx-padding: 5 5 5 5">
+                    <HBox>
+                        <Label fx:id="totalPriceLabel" text="\$0.00" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label fx:id="balanceLabel" text="Баланс: $0.00" />
+                    </HBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
+                        <HBox>
+                            <Label text="Риск:" />
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Label fx:id="totalRiskLabel" text="0%" />
+                        </HBox>
+                        <HBox>
+                            <Label text="Доходность:" />
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Label fx:id="totalReturnLabel" text="0%" />
+                        </HBox>
+
+                        <HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Посчитать статистику" onAction="#onComputeStatsButtonPressed" />
+                        </HBox>
+                    </VBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
+                        <HBox fx:id="targetReturnHBox">
+                            <HBox fx:id="targetReturnSliderContainer">
+                                <Slider fx:id="targetReturnSlider" min="-9.96578428" max="8.96578428466" />
+                            </HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Label fx:id="targetReturnLabel" text="0%" />
+                        </HBox>
+                        <HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Оптимизировать под % дохода" onAction="#onOptimizeForTargetReturnButtonPressed" />
+                        </HBox>
+                    </VBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
+                        <HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Оптимизировать под минимальный риск" onAction="#onOptimizeForMinRiskButtonPressed" />
+                        </HBox>
+                    </VBox>
+                    <Separator />
+                    <HBox style="-fx-padding: 10 0 0 0">
+                        <Label text="Оптимизация: " />
+                        <Label fx:id="optimizationStatusLabel" text="-" />
+                    </HBox>
+                </VBox>
+            </SplitPane>
+            <HBox style="-fx-padding: 5 0 0 0">
+                <Button text="+" />
+                <Button text="-" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#onConfirmButtonPressed" text="Подтвердить" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

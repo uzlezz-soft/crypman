@@ -319,6 +319,10 @@ public class PortfolioController implements Initializable {
         }
     }
 
+    public void sellButtonPressed() {
+
+    }
+
     public void exportPortfolioHistoryButtonPressed() {
         var history = fetchPortfolioHistory();
 

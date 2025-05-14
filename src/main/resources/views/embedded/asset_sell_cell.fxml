@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<?import javafx.geometry.Insets?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.uzlezz.crypman.gui.controllers.embedded.AssetSellCellController"
+      spacing="10" alignment="TOP_LEFT">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+    <ImageView fx:id="iconView" fitWidth="40" fitHeight="40" />
+
+    <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">
+        <HBox alignment="TOP_LEFT" spacing="10">
+            <Label fx:id="nameLabel" style="-fx-font-weight: bold;" />
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <HBox alignment="CENTER_RIGHT" spacing="0">
+                <Slider fx:id="amountSlider" />
+                <TextField fx:id="amountField" promptText="\$0.00" prefWidth="80"/>
+            </HBox>
+        </HBox>
+        <AnchorPane BorderPane.alignment="CENTER">
+            <Label fx:id="priceLabel" style="-fx-text-fill: #1f1f1f;" />
+        </AnchorPane>
+    </VBox>
+
+</HBox>
