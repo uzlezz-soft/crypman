@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<?import javafx.geometry.Insets?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.uzlezz.crypman.gui.controllers.embedded.PortfolioHistoryCellController"
+      spacing="10" alignment="TOP_LEFT">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+    <ImageView fx:id="iconView" fitWidth="40" fitHeight="40" />
+
+    <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">
+        <HBox alignment="TOP_LEFT" spacing="10">
+            <Label fx:id="nameLabel" style="-fx-font-weight: bold;" />
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <VBox alignment="CENTER_RIGHT" spacing="0">
+                <Label fx:id="balanceChangeLabel" style="-fx-font-size: 14px; -fx-text-fill: #1f1f1f;" />
+                <Label fx:id="cryptoChangeLabel" style="-fx-font-size: 12px; -fx-text-fill: gray;" />
+            </VBox>
+        </HBox>
+        <AnchorPane BorderPane.alignment="CENTER">
+            <Label fx:id="amountLabel" style="-fx-text-fill: #1f1f1f;" />
+        </AnchorPane>
+    </VBox>
+
+</HBox>

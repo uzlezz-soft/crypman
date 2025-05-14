@@ -16,9 +16,21 @@
                     </HBox>
                     <Separator />
                     <VBox style="-fx-padding: 10 0 10 0">
-                        <Label fx:id="totalRiskLabel" text="Риск: 0%" />
-                        <Label fx:id="totalReturnLabel" text="Доходность: 0%" />
-                        <Button text="Посчитать статистику" onAction="#onComputeStatsButtonPressed" />
+                        <HBox>
+                            <Label text="Риск:" />
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Label fx:id="totalRiskLabel" text="0%" />
+                        </HBox>
+                        <HBox>
+                            <Label text="Доходность:" />
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Label fx:id="totalReturnLabel" text="0%" />
+                        </HBox>
+
+                        <HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Посчитать статистику" onAction="#onComputeStatsButtonPressed" />
+                        </HBox>
                     </VBox>
                     <Separator />
                     <VBox style="-fx-padding: 10 0 10 0">
@@ -29,15 +41,31 @@
                             <Pane HBox.hgrow="ALWAYS" />
                             <Label fx:id="targetReturnLabel" text="0%" />
                         </HBox>
-                        <Button text="Оптимизировать под % дохода" onAction="#onOptimizeForTargetReturnButtonPressed" />
+                        <HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Оптимизировать под % дохода" onAction="#onOptimizeForTargetReturnButtonPressed" />
+                        </HBox>
                     </VBox>
                     <Separator />
                     <VBox style="-fx-padding: 10 0 10 0">
-                        <Button text="Оптимизировать под минимальный риск" onAction="#onOptimizeForMinRiskButtonPressed" />
+                        <HBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Оптимизировать под минимальный риск" onAction="#onOptimizeForMinRiskButtonPressed" />
+                        </HBox>
                     </VBox>
+                    <Separator />
+                    <HBox style="-fx-padding: 10 0 0 0">
+                        <Label text="Оптимизация: " />
+                        <Label fx:id="optimizationStatusLabel" text="-" />
+                    </HBox>
                 </VBox>
             </SplitPane>
-            <Button onAction="#onConfirmButtonPressed" text="Подтвердить" />
+            <HBox style="-fx-padding: 5 0 0 0">
+                <Button text="+" />
+                <Button text="-" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#onConfirmButtonPressed" text="Подтвердить" />
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

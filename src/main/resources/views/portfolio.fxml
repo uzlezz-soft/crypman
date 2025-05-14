@@ -38,7 +38,15 @@
             </Text>
 
             <SplitPane dividerPositions="0.5" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
-                <ListView fx:id="assetListView" />
+                <TabPane side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
+                    <Tab text="Активы">
+                        <ListView fx:id="assetListView" />
+                    </Tab>
+
+                    <Tab text="История операций">
+                        <ListView fx:id="portfolioHistoryListView" />
+                    </Tab>
+                </TabPane>
 
                 <VBox alignment="TOP_CENTER" spacing="10" VBox.vgrow="ALWAYS">
                     <ComboBox fx:id="chartTypeComboBox" onAction="#onChartTypeChanged" prefWidth="200" />

@@ -26,6 +26,7 @@ import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
 import net.uzlezz.crypman.gui.utils.StageLoader;
 import net.uzlezz.crypman.gui.views.AssetListCell;
+import net.uzlezz.crypman.gui.views.PortfolioHistoryListCell;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
 import net.uzlezz.crypman.network.schemas.request.Deposit;
@@ -61,12 +62,18 @@ public class PortfolioController implements Initializable {
 
     @FXML
     private ListView<Asset> assetListView;
+    @FXML
+    private ListView<PortfolioActionRecord> portfolioHistoryListView;
 
     private final ZoneId localZoneId = ZoneId.systemDefault();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         assetListView.setCellFactory(listView -> new AssetListCell());
+        assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
+                chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
+
+        portfolioHistoryListView.setCellFactory(listView -> new PortfolioHistoryListCell());
         assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
                 chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
 
@@ -137,6 +144,13 @@ public class PortfolioController implements Initializable {
             chartTypeComboBox.getSelectionModel().select(previousSelection);
 
         populateChart();
+
+        response = ServerClient.getInstance().sendRequest(new Request("portfolio/history"));
+        ResponseFailureUtils.handle(response);
+        var portfolioHistory = ((List<PortfolioActionRecord>)response.getPayload()).stream()
+                .sorted((a, b) -> b.getDateTime().compareTo(a.getDateTime())).toList();
+        System.out.printf("%s%n", portfolioHistory);
+        portfolioHistoryListView.getItems().setAll(portfolioHistory);
     }
 
     public void onLogoutButtonPressed() {
@@ -260,6 +274,7 @@ public class PortfolioController implements Initializable {
             ResponseFailureUtils.handle(response);
 
             updateUserInfo();
+            refreshPortfolio();
         }
     }
 
@@ -287,11 +302,8 @@ public class PortfolioController implements Initializable {
         dialog.showAndWait();
 
         if (!controller.isCancelled()) {
-            //var payload = new Deposit(controller.getMoneyAmount());
-            //var response = ServerClient.getInstance().sendRequest(new Request("user/deposit", payload));
-            //ResponseFailureUtils.handle(response);
-
-            //updateUserInfo();
+            updateUserInfo();
+            refreshPortfolio();
         }
     }
 }

@@ -5,21 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861b179b-bb84-4de6-9ec0-e1ff59e9d88d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetPurchaseDialogController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/embedded/AssetPurchaseCellController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/utils/CustomEvents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetPurchaseListCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/CryptocurrencyGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/Optimization.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/OptimizationResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/PortfolioStats.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_purchase.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/embedded/asset_buy_cell.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/embedded/PortfolioHistoryCellController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/PortfolioHistoryListCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/BuyOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/BuyOrders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/response/PortfolioActionRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/views/embedded/portfolio_history_cell.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetPurchaseDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetPurchaseDialogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_purchase.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_purchase.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/register.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +69,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Projects/Labs/4Sem/ProgSP/Crypman/src/main/resources/views/dialogs",
+    "last_opened_file_path": "C:/Projects/Labs/4Sem/ProgSP/Crypman/src/main/resources/views/embedded",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.47011495",
@@ -81,8 +78,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Projects\Labs\4Sem\ProgSP\Crypman\src\main\resources\views\dialogs" />
       <recent name="C:\Projects\Labs\4Sem\ProgSP\Crypman\src\main\resources\views\embedded" />
+      <recent name="C:\Projects\Labs\4Sem\ProgSP\Crypman\src\main\resources\views\dialogs" />
       <recent name="$PROJECT_DIR$/src/main/resources/views" />
       <recent name="C:\Projects\Labs\4Sem\ProgSP\Crypman\src\main\resources\views" />
     </key>
@@ -91,9 +88,9 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="net.uzlezz.crypman.gui.views" />
-      <recent name="net.uzlezz.crypman.gui.controllers.dialogs" />
       <recent name="net.uzlezz.crypman.gui.controllers.embedded" />
       <recent name="net.uzlezz.crypman.gui.data" />
+      <recent name="net.uzlezz.crypman.gui.controllers.dialogs" />
       <recent name="net.uzlezz.crypman.gui.controllers" />
     </key>
   </component>

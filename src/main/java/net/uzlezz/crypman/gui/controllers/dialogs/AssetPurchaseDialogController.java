@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -20,6 +17,8 @@ import net.uzlezz.crypman.gui.views.AssetListCell;
 import net.uzlezz.crypman.gui.views.AssetPurchaseListCell;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
+import net.uzlezz.crypman.network.schemas.request.BuyOrder;
+import net.uzlezz.crypman.network.schemas.request.BuyOrders;
 import net.uzlezz.crypman.network.schemas.request.CryptocurrencyGroup;
 import net.uzlezz.crypman.network.schemas.request.Optimization;
 import net.uzlezz.crypman.network.schemas.response.OptimizationResult;
@@ -28,14 +27,14 @@ import net.uzlezz.crypman.network.schemas.response.PortfolioStats;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
 public class AssetPurchaseDialogController implements Initializable {
 
+    @FXML
+    private Label optimizationStatusLabel;
     @FXML
     private Label totalRiskLabel;
     @FXML
@@ -60,6 +59,19 @@ public class AssetPurchaseDialogController implements Initializable {
     private BigDecimal totalCost;
 
     public void onConfirmButtonPressed() {
+        if (totalCost.compareTo(new BigDecimal(balanceLabel.getText().replace("$", ""))) > 0) {
+            AlertUtils.showError("Ошибка", "Недостаточно средств");
+            return;
+        }
+        if (AlertUtils.showConfirmation("Подтвердите действие",
+                String.format("Вы действительно хотите купить криптовалюту на сумму $%.2f?", totalCost)) != ButtonType.OK) return;
+
+        List<BuyOrder> orders = amountMap.entrySet().stream()
+                .map(x -> new BuyOrder(x.getKey().getName(), x.getValue().getAmount()))
+                .toList();
+        var response = ServerClient.getInstance().sendRequest(new Request("portfolio/buy", new BuyOrders(orders)));
+        ResponseFailureUtils.handle(response);
+
         isCancelled = false;
         ((Stage)assetListView.getScene().getWindow()).close();
     }
@@ -87,13 +99,13 @@ public class AssetPurchaseDialogController implements Initializable {
     }
 
     private void updateStats(double risk, double returns) {
-        totalRiskLabel.setText(String.format("Риск: %.4f%%", risk * 100));
-        totalReturnLabel.setText(String.format("Доходность: %.4f%%", returns * 100));
+        totalRiskLabel.setText(String.format("%.4f%%", risk * 100));
+        totalReturnLabel.setText(String.format("%.4f%%", returns * 100));
     }
 
     public void onComputeStatsButtonPressed() {
         var payload = new CryptocurrencyGroup(7, amountMap.entrySet().stream()
-                .collect(Collectors.toMap(x -> x.getKey().getName(), x -> x.getValue().getAmount().multiply(x.getKey().getPrice())
+                .collect(Collectors.toMap(x -> x.getKey().getName(), x -> x.getValue().getAmount()
                         .divide(totalCost, 15, RoundingMode.HALF_EVEN).doubleValue())));
         var response = ServerClient.getInstance().sendRequest(new Request("portfolio/calculateStats", payload));
         ResponseFailureUtils.handle(response);
@@ -102,40 +114,39 @@ public class AssetPurchaseDialogController implements Initializable {
         updateStats(stats.getRisk(), stats.getReturns());
     }
 
-    private void applyOptimizationResult(OptimizationResult result) {
+    private void applyOptimization(Optimization optimization) {
+        var response = ServerClient.getInstance().sendRequest(new Request("portfolio/optimize", optimization));
+        ResponseFailureUtils.handle(response);
+        var result = (OptimizationResult)response.getPayload();
+
         var totalAmount = result.getWeights().values().stream().reduce(0.0, Double::sum);
         if (totalAmount == 0) {
-            AlertUtils.showError("Ошибка", "Оптимизация не удалась");
+            optimizationStatusLabel.setText("ошибка");
+            //AlertUtils.showError("Ошибка", "Оптимизация не удалась");
             return;
         }
 
+        var currentTotalCost = totalCost.add(BigDecimal.ZERO);
         updateStats(result.getStats().getRisk(), result.getStats().getReturns());
         for (var entry : result.getWeights().entrySet()) {
             var crypto = MarketState.getCryptocurrency(entry.getKey());
             var amount = new BigDecimal(entry.getValue());
             if (amount.compareTo(new BigDecimal("0.001")) < 0) amount = BigDecimal.ZERO;
-            amountMap.get(crypto).setAmount(totalCost.multiply(amount).toString());
+            amountMap.get(crypto).setAmount(currentTotalCost.multiply(amount).toString());
         }
+        optimizationStatusLabel.setText("успех");
     }
 
     public void onOptimizeForTargetReturnButtonPressed() {
-        var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0')), 7,
+        var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0')) / 100.0, 7,
                 amountMap.keySet().stream().map(Cryptocurrency::getName).toList());
-        var response = ServerClient.getInstance().sendRequest(new Request("portfolio/optimize", payload));
-        ResponseFailureUtils.handle(response);
-
-        var result = (OptimizationResult)response.getPayload();
-        applyOptimizationResult(result);
+        applyOptimization(payload);
     }
 
     public void onOptimizeForMinRiskButtonPressed() {
         var payload = new Optimization(false, 0.0, 7,
                 amountMap.keySet().stream().map(Cryptocurrency::getName).toList());
-        var response = ServerClient.getInstance().sendRequest(new Request("portfolio/optimize", payload));
-        ResponseFailureUtils.handle(response);
-
-        var result = (OptimizationResult)response.getPayload();
-        applyOptimizationResult(result);
+        applyOptimization(payload);
     }
 
 }
