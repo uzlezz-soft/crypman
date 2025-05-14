@@ -59,7 +59,7 @@ public class AssetPurchaseDialogController implements Initializable {
     private BigDecimal totalCost;
 
     public void onConfirmButtonPressed() {
-        if (totalCost.compareTo(new BigDecimal(balanceLabel.getText().replace("$", ""))) > 0) {
+        if (totalCost.compareTo(new BigDecimal(balanceLabel.getText().replace("$", "").replace(",", "."))) > 0) {
             AlertUtils.showError("Ошибка", "Недостаточно средств");
             return;
         }
@@ -138,7 +138,7 @@ public class AssetPurchaseDialogController implements Initializable {
     }
 
     public void onOptimizeForTargetReturnButtonPressed() {
-        var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0')) / 100.0, 7,
+        var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0').replace(",", ".")) / 100.0, 7,
                 amountMap.keySet().stream().map(Cryptocurrency::getName).toList());
         applyOptimization(payload);
     }

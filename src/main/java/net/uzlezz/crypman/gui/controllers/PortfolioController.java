@@ -15,6 +15,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -32,6 +33,8 @@ import net.uzlezz.crypman.network.ServerClient;
 import net.uzlezz.crypman.network.schemas.request.Deposit;
 import net.uzlezz.crypman.network.schemas.response.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -65,7 +68,10 @@ public class PortfolioController implements Initializable {
     @FXML
     private ListView<PortfolioActionRecord> portfolioHistoryListView;
 
+    private FileChooser portfolioHistoryFileChooser;
+
     private final ZoneId localZoneId = ZoneId.systemDefault();
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,6 +82,10 @@ public class PortfolioController implements Initializable {
         portfolioHistoryListView.setCellFactory(listView -> new PortfolioHistoryListCell());
         assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
                 chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
+
+        portfolioHistoryFileChooser = new FileChooser();
+        portfolioHistoryFileChooser.setTitle("Файл с историей портфеля");
+        portfolioHistoryFileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT", "*.txt"));
 
         updateUserInfo();
 
@@ -145,12 +155,14 @@ public class PortfolioController implements Initializable {
 
         populateChart();
 
-        response = ServerClient.getInstance().sendRequest(new Request("portfolio/history"));
+        portfolioHistoryListView.getItems().setAll(fetchPortfolioHistory());
+    }
+
+    private List<PortfolioActionRecord> fetchPortfolioHistory() {
+        var response = ServerClient.getInstance().sendRequest(new Request("portfolio/history"));
         ResponseFailureUtils.handle(response);
-        var portfolioHistory = ((List<PortfolioActionRecord>)response.getPayload()).stream()
+        return ((List<PortfolioActionRecord>)response.getPayload()).stream()
                 .sorted((a, b) -> b.getDateTime().compareTo(a.getDateTime())).toList();
-        System.out.printf("%s%n", portfolioHistory);
-        portfolioHistoryListView.getItems().setAll(portfolioHistory);
     }
 
     public void onLogoutButtonPressed() {
@@ -278,8 +290,8 @@ public class PortfolioController implements Initializable {
         }
     }
 
-    public void buyButtonPressed(ActionEvent actionEvent) {Stage dialog = new Stage();
-
+    public void buyButtonPressed() {
+        Stage dialog = new Stage();
         var loader = new FXMLLoader(StageLoader.class.getResource(StagePath.PURCHASE_ASSETS_DIALOG.getPath()));
         Parent root = null;
         try {
@@ -304,6 +316,29 @@ public class PortfolioController implements Initializable {
         if (!controller.isCancelled()) {
             updateUserInfo();
             refreshPortfolio();
+        }
+    }
+
+    public void exportPortfolioHistoryButtonPressed() {
+        var history = fetchPortfolioHistory();
+
+        var file = portfolioHistoryFileChooser.showSaveDialog(usernameLabel.getScene().getWindow());
+        if (file == null) return;
+
+        try (var writer = new BufferedWriter(new FileWriter(file))) {
+            history.stream()
+                    .map(x -> String.format("[%s] [%10s] баланс $%.2f%s\n", dateTimeFormatter.format(x.getDateTime()), x.getAction(),
+                            x.getBalanceDelta(), Objects.equals(x.getCryptocurrencyName(), "") ? ""
+                            : String.format(",   %.9f %s", x.getCryptocurrencyDelta(), x.getCryptocurrencyName())))
+                    .forEach(str -> {
+                        try {
+                            writer.write(str);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
