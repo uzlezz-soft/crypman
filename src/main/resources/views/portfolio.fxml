@@ -45,10 +45,14 @@
                     </Tab>
 
                     <Tab text="История операций">
-                        <VBox>
-                            <ListView fx:id="portfolioHistoryListView" />
-                            <Button onAction="#exportPortfolioHistoryButtonPressed" text="Экспортировать в файл" />
-                        </VBox>
+                        <BorderPane style="-fx-padding: 0 0 3 0">
+                            <center>
+                                <ListView fx:id="portfolioHistoryListView" />
+                            </center>
+                            <bottom>
+                                <Button onAction="#exportPortfolioHistoryButtonPressed" text="Экспортировать в файл" />
+                            </bottom>
+                        </BorderPane>
                     </Tab>
                 </TabPane>
 

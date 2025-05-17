@@ -22,7 +22,7 @@ public final class StageLoader {
             loadUnchecked(stage, path);
         } catch (IOException exception) {
             exception.printStackTrace();
-            AlertUtils.showError("Navigation Error", String.format("Unable to navigate to %s", path.getPath()));
+            AlertUtils.showError("Ошибка Навигации", String.format("Невозможно перейти по пути %s", path.getPath()));
         }
     }
 

@@ -10,6 +10,10 @@ import lombok.Getter;
 @Getter
 public class AssetSellCellController {
     @FXML
+    private Label totalAmountLabel;
+    @FXML
+    private Label returnsLabel;
+    @FXML
     private Slider amountSlider;
     @FXML
     private TextField amountField;

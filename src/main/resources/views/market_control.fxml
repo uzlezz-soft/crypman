@@ -21,14 +21,14 @@
     </top>
 
     <center>
-        <VBox alignment="TOP_CENTER" spacing="20" VBox.vgrow="ALWAYS">
+        <VBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
             <Text style="-fx-fill: #1f1f1f;" text="Управление">
                 <font>
                     <Font name="Helvetica Neue" size="24" />
                 </font>
             </Text>
 
-            <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="mainTabPane">
+            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
 
                 <Tab fx:id="tabCrypto" text="Криптовалюта">
                     <SplitPane dividerPositions="0.6" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
@@ -114,6 +114,17 @@
                                     </Group>
                                 </VBox>
                             </top>
+                            <center>
+                                <TableView fx:id="userPortfolioHistoryTableView" layoutX="10" layoutY="10" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="historyDateColumn" prefWidth="300.0" text="Дата" />
+                                        <TableColumn fx:id="historyActionColumn" prefWidth="100.0" text="Действие" />
+                                        <TableColumn fx:id="historyBalanceColumn" prefWidth="150.0" text="Баланс" />
+                                        <TableColumn fx:id="historyCryptoColumn" prefWidth="150.0" text="Криптовалюта" />
+                                        <TableColumn fx:id="historyCryptoChangeColumn" prefWidth="150.0" text="Количество" />
+                                    </columns>
+                                </TableView>
+                            </center>
                         </BorderPane>
                     </SplitPane>
                 </Tab>

@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
 public class AssetPurchaseDialogController implements Initializable {
 
     @FXML
+    private ComboBox<String> cryptoComboBox;
+    @FXML
     private Label optimizationStatusLabel;
     @FXML
     private Label totalRiskLabel;
@@ -59,6 +61,7 @@ public class AssetPurchaseDialogController implements Initializable {
     private BigDecimal totalCost;
 
     public void onConfirmButtonPressed() {
+        if (assetListView.getItems().isEmpty()) return;
         if (totalCost.compareTo(new BigDecimal(balanceLabel.getText().replace("$", "").replace(",", "."))) > 0) {
             AlertUtils.showError("Ошибка", "Недостаточно средств");
             return;
@@ -67,6 +70,7 @@ public class AssetPurchaseDialogController implements Initializable {
                 String.format("Вы действительно хотите купить криптовалюту на сумму $%.2f?", totalCost)) != ButtonType.OK) return;
 
         List<BuyOrder> orders = amountMap.entrySet().stream()
+                .filter(x -> x.getValue().getAmount().compareTo(BigDecimal.ZERO) > 0)
                 .map(x -> new BuyOrder(x.getKey().getName(), x.getValue().getAmount()))
                 .toList();
         var response = ServerClient.getInstance().sendRequest(new Request("portfolio/buy", new BuyOrders(orders)));
@@ -94,8 +98,7 @@ public class AssetPurchaseDialogController implements Initializable {
 
         targetReturnSliderContainer.widthProperty().addListener((ov, oldWidth, newWidth) -> targetReturnSlider.setPrefWidth(newWidth.doubleValue()));
         targetReturnSliderContainer.prefWidthProperty().bind(targetReturnHBox.widthProperty().multiply(0.7));
-
-        assetListView.getItems().setAll(MarketState.getCryptocurrencies());
+        cryptoComboBox.getItems().addAll(MarketState.getCryptocurrencies().stream().map(Cryptocurrency::getName).toList());
     }
 
     private void updateStats(double risk, double returns) {
@@ -122,7 +125,6 @@ public class AssetPurchaseDialogController implements Initializable {
         var totalAmount = result.getWeights().values().stream().reduce(0.0, Double::sum);
         if (totalAmount == 0) {
             optimizationStatusLabel.setText("ошибка");
-            //AlertUtils.showError("Ошибка", "Оптимизация не удалась");
             return;
         }
 
@@ -139,14 +141,31 @@ public class AssetPurchaseDialogController implements Initializable {
 
     public void onOptimizeForTargetReturnButtonPressed() {
         var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0').replace(",", ".")) / 100.0, 7,
-                amountMap.keySet().stream().map(Cryptocurrency::getName).toList());
+                assetListView.getItems().stream().map(Cryptocurrency::getName).toList());
         applyOptimization(payload);
     }
 
     public void onOptimizeForMinRiskButtonPressed() {
         var payload = new Optimization(false, 0.0, 7,
-                amountMap.keySet().stream().map(Cryptocurrency::getName).toList());
+                assetListView.getItems().stream().map(Cryptocurrency::getName).toList());
         applyOptimization(payload);
     }
 
+    public void addCryptoButtonPressed() {
+        var cryptoName = cryptoComboBox.getSelectionModel().getSelectedItem();
+        if (cryptoName == null) return;
+
+        var crypto = MarketState.getCryptocurrency(cryptoName);
+        assetListView.getItems().add(crypto);
+        cryptoComboBox.getItems().remove(cryptoComboBox.getSelectionModel().getSelectedIndex());
+    }
+
+    public void removeCryptoButtonPressed() {
+        var crypto = assetListView.getSelectionModel().getSelectedItem();
+        if (crypto == null) return;
+
+        cryptoComboBox.getItems().add(crypto.getName());
+        amountMap.remove(crypto);
+        assetListView.getItems().remove(assetListView.getSelectionModel().getSelectedIndex());
+    }
 }

@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController">
-    <VBox style="-fx-padding: 20 20 20 20">
-        <HBox>
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" style="-fx-padding: 40"
+            fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController">
+        <HBox alignment="CENTER">
             <TextField fx:id="moneyAmountField"  promptText="Количество" />
             <Text>$</Text>
         </HBox>
+        <Pane minHeight="5" />
         <Button text="Подтвердить" onAction="#onAddMoneyButtonPressed" />
-    </VBox>
-</AnchorPane>
+</VBox>

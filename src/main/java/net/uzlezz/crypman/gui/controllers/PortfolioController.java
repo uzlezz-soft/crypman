@@ -22,6 +22,7 @@ import javafx.util.StringConverter;
 import net.uzlezz.crypman.MarketState;
 import net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController;
 import net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController;
+import net.uzlezz.crypman.gui.controllers.dialogs.AssetSellDialogController;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
 import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
@@ -31,6 +32,8 @@ import net.uzlezz.crypman.gui.views.PortfolioHistoryListCell;
 import net.uzlezz.crypman.network.Request;
 import net.uzlezz.crypman.network.ServerClient;
 import net.uzlezz.crypman.network.schemas.request.Deposit;
+import net.uzlezz.crypman.network.schemas.request.SellOrder;
+import net.uzlezz.crypman.network.schemas.request.SellOrders;
 import net.uzlezz.crypman.network.schemas.response.*;
 
 import java.io.BufferedWriter;
@@ -76,12 +79,12 @@ public class PortfolioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         assetListView.setCellFactory(listView -> new AssetListCell());
-        assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
-                chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
+        assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) -> {
+            if (newAsset != null)
+                chartTypeComboBox.getSelectionModel().select(newAsset.getName());
+        });
 
         portfolioHistoryListView.setCellFactory(listView -> new PortfolioHistoryListCell());
-        assetListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldAsset, newAsset) ->
-                chartTypeComboBox.getSelectionModel().select(newAsset.getName()));
 
         portfolioHistoryFileChooser = new FileChooser();
         portfolioHistoryFileChooser.setTitle("Файл с историей портфеля");
@@ -200,13 +203,11 @@ public class PortfolioController implements Initializable {
         long nowEpoch = now.toEpochSecond();
         long weekAgoEpoch = oneWeekAgo.toEpochSecond();
 
-        // Преобразуем и фильтруем
         var filtered = priceRecords.stream()
                 .map(record -> new AbstractMap.SimpleEntry<>(record.getTime().atZone(localZoneId).toEpochSecond(), record.getValue()))
                 .filter(entry -> entry.getKey() <= nowEpoch)
                 .sorted(Comparator.comparingLong(Map.Entry::getKey))
                 .toList();
-
         if (filtered.isEmpty()) {
             priceChart.getData().clear();
             return;
@@ -226,7 +227,6 @@ public class PortfolioController implements Initializable {
             if (value.compareTo(maxPrice) > 0) maxPrice = value;
         }
 
-        // Добавляем точку справа, если нет данных вплоть до nowEpoch
         Map.Entry<Long, BigDecimal> last = filtered.get(filtered.size() - 1);
         if (last.getKey() < nowEpoch) {
             series.getData().add(new XYChart.Data<>(nowEpoch, last.getValue()));
@@ -238,19 +238,17 @@ public class PortfolioController implements Initializable {
         BigDecimal finalMinPrice = minPrice;
         BigDecimal finalMaxPrice = maxPrice;
         Platform.runLater(() -> {
-            // Ось X
             xAxis.setAutoRanging(false);
             xAxis.setLowerBound(weekAgoEpoch);
             xAxis.setUpperBound(nowEpoch);
             xAxis.setTickUnit((nowEpoch - weekAgoEpoch) / 10.0);
 
-            // Ось Y
             yAxis.setAutoRanging(false);
             double minY = Math.max(finalMinPrice.doubleValue(), 0.0);
             double maxY = finalMaxPrice.doubleValue();
 
-            double padding = (maxY - minY) * 0.1; // 10% от диапазона
-            if (padding == 0) padding = maxY * 0.05; // если значения одинаковы
+            double padding = (maxY - minY) * 0.1;
+            if (padding == 0) padding = maxY * 0.05;
 
             yAxis.setLowerBound(minY - padding);
             yAxis.setUpperBound(maxY + padding);
@@ -320,7 +318,32 @@ public class PortfolioController implements Initializable {
     }
 
     public void sellButtonPressed() {
+        Stage dialog = new Stage();
+        var loader = new FXMLLoader(StageLoader.class.getResource(StagePath.SELL_ASSETS_DIALOG.getPath()));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertUtils.showError("Ошибка", "");
+            return;
+        }
+        var controller = (AssetSellDialogController)loader.getController();
 
+        dialog.setScene(new Scene(root));
+        dialog.setTitle("Продажа активов");
+        dialog.centerOnScreen();
+
+        controller.getBalanceLabel().setText(balanceLabel.getText());
+
+        dialog.initOwner(usernameLabel.getScene().getWindow());
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.showAndWait();
+
+        if (!controller.isCancelled()) {
+            updateUserInfo();
+            refreshPortfolio();
+        }
     }
 
     public void exportPortfolioHistoryButtonPressed() {
@@ -331,9 +354,9 @@ public class PortfolioController implements Initializable {
 
         try (var writer = new BufferedWriter(new FileWriter(file))) {
             history.stream()
-                    .map(x -> String.format("[%s] [%10s] баланс $%.2f%s\n", dateTimeFormatter.format(x.getDateTime()), x.getAction(),
-                            x.getBalanceDelta(), Objects.equals(x.getCryptocurrencyName(), "") ? ""
-                            : String.format(",   %.9f %s", x.getCryptocurrencyDelta(), x.getCryptocurrencyName())))
+                    .map(x -> String.format("[%s] [%10s] баланс %20s%s\n", dateTimeFormatter.format(x.getDateTime()), x.getAction(),
+                            String.format("$%.4f", x.getBalanceDelta()), Objects.equals(x.getCryptocurrencyName(), "") ? ""
+                            : String.format("     криптовалюта %20s", String.format("%.9f %s", x.getCryptocurrencyDelta(), x.getCryptocurrencyName()))))
                     .forEach(str -> {
                         try {
                             writer.write(str);

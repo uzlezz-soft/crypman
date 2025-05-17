@@ -5,13 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="861b179b-bb84-4de6-9ec0-e1ff59e9d88d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetSellDialogController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/embedded/AssetSellCellController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetSellListCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_sell.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/views/embedded/asset_sell_cell.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/data/PortfolioAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/SellOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/network/schemas/request/SellOrders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/MarketControlController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/PortfolioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetPurchaseDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetPurchaseDialogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetSellDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/dialogs/AssetSellDialogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/embedded/AssetSellCellController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/controllers/embedded/AssetSellCellController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/enums/StagePath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/utils/StageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/utils/StageLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetSellListCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/uzlezz/crypman/gui/views/AssetSellListCell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/dialogs/add_money.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/add_money.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_purchase.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_purchase.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_sell.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/dialogs/asset_sell.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/embedded/asset_sell_cell.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/embedded/asset_sell_cell.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/market_control.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/views/portfolio.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,29 +59,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "Application.Run.executor": "Run",
-    "Maven.Crypman [clean:clean].executor": "Run",
-    "Maven.Crypman [javafx:jlink].executor": "Run",
-    "Maven.Crypman [org.apache.maven.plugins:maven-clean-plugin:2.5:clean].executor": "Run",
-    "Maven.Crypman [org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile].executor": "Run",
-    "Maven.Crypman [org.apache.maven.plugins:maven-resources-plugin:2.6:resources].executor": "Run",
-    "Maven.Crypman [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
-    "Maven.Crypman [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/gleb/projects/labs/4sem/crypman/src/main/resources/views/dialogs",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.47011495",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [clean:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [javafx:jlink].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.apache.maven.plugins:maven-clean-plugin:2.5:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.apache.maven.plugins:maven-resources-plugin:2.6:resources].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Crypman [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Projects/Labs/4Sem/ProgSP/Crypman/src/main/resources/views/embedded&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.47011495&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/views/dialogs" />
@@ -84,11 +94,11 @@
       <recent name="C:\Projects\Labs\4Sem\ProgSP\Crypman\src\main\resources\views" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.uzlezz.crypman.network.schemas.request" />
       <recent name="net.uzlezz.crypman.gui.data" />
       <recent name="net.uzlezz.crypman.gui.views" />
       <recent name="net.uzlezz.crypman.gui.controllers.dialogs" />
       <recent name="net.uzlezz.crypman.gui.controllers.embedded" />
-      <recent name="net.uzlezz.crypman.gui.controllers" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Run">

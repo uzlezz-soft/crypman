@@ -10,6 +10,7 @@ import net.uzlezz.crypman.MarketState;
 import net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController;
 import net.uzlezz.crypman.gui.controllers.dialogs.AssetSellDialogController;
 import net.uzlezz.crypman.gui.controllers.embedded.AssetPurchaseCellController;
+import net.uzlezz.crypman.gui.controllers.embedded.AssetSellCellController;
 import net.uzlezz.crypman.gui.data.Cryptocurrency;
 import net.uzlezz.crypman.gui.utils.CustomEvents;
 import net.uzlezz.crypman.network.schemas.response.Asset;
@@ -22,15 +23,15 @@ import java.util.Objects;
 
 public class AssetSellListCell extends ListCell<Asset> {
     private FXMLLoader loader;
-    private AssetPurchaseCellController controller;
+    private AssetSellCellController controller;
 
     @Getter
     private BigDecimal amount = BigDecimal.ZERO;
 
-    private ListView<Cryptocurrency> owner;
+    private ListView<Asset> owner;
     private AssetSellDialogController owningController;
 
-    public AssetSellListCell(ListView<Cryptocurrency> owner, AssetSellDialogController controller) {
+    public AssetSellListCell(ListView<Asset> owner, AssetSellDialogController controller) {
         super();
         this.owner = owner;
         owningController = controller;
@@ -55,11 +56,42 @@ public class AssetSellListCell extends ListCell<Asset> {
             }
 
             var crypto = MarketState.getCryptocurrency(asset.getName());
+            controller.getTotalAmountLabel().setText(String.format("%.9f %s", asset.getAmount(), crypto.getName()));
+
+            controller.getAmountSlider().setMax(asset.getAmount().doubleValue());
+            controller.getAmountSlider().valueProperty().addListener((ov, oldValue, newValue) -> {
+                if (newValue == null) return;
+                try {
+                    var textValue = Double.parseDouble(controller.getAmountField().getText());
+                    if (newValue.doubleValue() != textValue) {
+                        controller.getAmountField().setText(String.format("%f", newValue.doubleValue()));
+                    }
+                } catch (NumberFormatException ignored) {
+                    controller.getAmountField().setText(String.format("%f", newValue.doubleValue()));
+                }
+            });
+
+            controller.getAmountField().textProperty().addListener((ov, oldText, newText) -> {
+                if (newText == null) return;
+                try {
+                    var newAmount = newText.isEmpty() ? BigDecimal.ZERO : new BigDecimal(newText);
+                    if (newAmount.compareTo(BigDecimal.ZERO) < 0 || newAmount.compareTo(asset.getAmount()) > 0) return;
+                    amount = newAmount;
+                } catch (NumberFormatException ignored) {
+                    amount = BigDecimal.ZERO;
+                }
+                controller.getReturnsLabel().setText(String.format("$%.4f", amount.multiply(crypto.getPrice())));
+                controller.getAmountSlider().setValue(amount.doubleValue());
+
+                owningController.getAmountMap().put(crypto, this);
+                owner.fireEvent(new CustomEvents(CustomEvents.ASSET_AMOUNT_CHANGED));
+            });
+
             controller.getNameLabel().setText(crypto.getFriendlyName());
-            controller.getAmountLabel().setText(String.format("%.9f %s", amount, crypto.getName()));
+            //controller.getAmountField().setText(String.format("%.9f %s", amount, crypto.getName()));
             controller.getPriceLabel().setText("$" + String.format(crypto.getPrice().compareTo(new BigDecimal("0.001")) < 0 ?
                     "%.4f" : crypto.getPrice().compareTo(new BigDecimal("0.01")) < 0 ? "%.3f" : "%.2f", crypto.getPrice()));
-            controller.getAmountField().textProperty().addListener((ov, oldText, newText) -> {
+            /*controller.getAmountField().textProperty().addListener((ov, oldText, newText) -> {
                 if (newText != null) {
                     try {
                         var newAmount = newText.isEmpty() ? BigDecimal.ZERO : new BigDecimal(newText);
@@ -70,11 +102,11 @@ public class AssetSellListCell extends ListCell<Asset> {
                     }
 
                     var cryptoAmount = amount.divide(crypto.getPrice(), 15, RoundingMode.HALF_EVEN);
-                    controller.getAmountLabel().setText(String.format("%.9f %s", cryptoAmount, crypto.getName()));
-                    owningController.getAmountMap().put(crypto, this);
+                    //controller.getAmountField().setText(String.format("%.9f %s", cryptoAmount, crypto.getName()));
+                    //owningController.getAmountMap().put(crypto, this);
                     owner.fireEvent(new CustomEvents(CustomEvents.ASSET_AMOUNT_CHANGED));
                 }
-            });
+            });*/
 
             Image icon = loadIcon(crypto.getIcon());
             controller.getIconView().setImage(icon);

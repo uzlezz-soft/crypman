@@ -16,15 +16,23 @@
         <HBox alignment="TOP_LEFT" spacing="10">
             <Label fx:id="nameLabel" style="-fx-font-weight: bold;" />
             <Pane HBox.hgrow="ALWAYS" />
+            <Label fx:id="totalAmountLabel" />
 
-            <HBox alignment="CENTER_RIGHT" spacing="0">
-                <Slider fx:id="amountSlider" />
-                <TextField fx:id="amountField" promptText="\$0.00" prefWidth="80"/>
-            </HBox>
+            <VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="0">
+                    <Slider fx:id="amountSlider" />
+                    <TextField fx:id="amountField" promptText="\$0.00" prefWidth="80"/>
+                </HBox>
+            </VBox>
         </HBox>
-        <AnchorPane BorderPane.alignment="CENTER">
+        <HBox>
             <Label fx:id="priceLabel" style="-fx-text-fill: #1f1f1f;" />
-        </AnchorPane>
+            <Pane HBox.hgrow="ALWAYS" />
+            <Label fx:id="returnsLabel" style="-fx-font-size: 14" text="\$0.00" />
+        </HBox>
+        <!--<AnchorPane BorderPane.alignment="CENTER">
+
+        </AnchorPane>-->
     </VBox>
 
 </HBox>

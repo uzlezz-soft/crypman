@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import net.uzlezz.crypman.MarketState;
+import net.uzlezz.crypman.gui.data.PortfolioAction;
 import net.uzlezz.crypman.gui.data.User;
 import net.uzlezz.crypman.gui.enums.StagePath;
 import net.uzlezz.crypman.gui.utils.AlertUtils;
@@ -28,6 +29,7 @@ import net.uzlezz.crypman.network.ServerClient;
 import net.uzlezz.crypman.network.schemas.request.*;
 import net.uzlezz.crypman.gui.data.Cryptocurrency;
 import net.uzlezz.crypman.gui.data.Log;
+import net.uzlezz.crypman.network.schemas.response.PortfolioActionRecord;
 import net.uzlezz.crypman.network.schemas.response.PriceRecord;
 import net.uzlezz.crypman.network.schemas.response.UserInfo;
 
@@ -41,8 +43,6 @@ import java.util.*;
 import java.util.function.Function;
 
 public class MarketControlController implements Initializable {
-    @FXML
-    private TabPane mainTabPane;
     @FXML
     private Tab tabCrypto;
     @FXML
@@ -60,6 +60,19 @@ public class MarketControlController implements Initializable {
     private TableColumn<User, String> userRoleColumn;
     @FXML
     private TableColumn<User, String> userStatusColumn;
+
+    @FXML
+    private TableView<PortfolioAction> userPortfolioHistoryTableView;
+    @FXML
+    private TableColumn<PortfolioAction, LocalDateTime> historyDateColumn;
+    @FXML
+    private TableColumn<PortfolioAction, String> historyActionColumn;
+    @FXML
+    private TableColumn<PortfolioAction, String> historyBalanceColumn;
+    @FXML
+    private TableColumn<PortfolioAction, String> historyCryptoColumn;
+    @FXML
+    private TableColumn<PortfolioAction, String> historyCryptoChangeColumn;
 
     @FXML
     private ComboBox<Integer> numLogsComboBox;
@@ -123,6 +136,7 @@ public class MarketControlController implements Initializable {
 
     private final ObservableList<Cryptocurrency> cryptocurrencies = FXCollections.observableArrayList();
     private final ObservableList<User> users = FXCollections.observableArrayList();
+    private final ObservableList<PortfolioAction> portfolioHistory = FXCollections.observableArrayList();
     private final ObservableList<Log> logs = FXCollections.observableArrayList();
 
     private static final DateTimeFormatter logFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -191,7 +205,34 @@ public class MarketControlController implements Initializable {
             selectedUserNameLabel.setText(newUser.getName());
             selectedUserBalanceLabel.setText("$" + newUser.getBalance());
             userAccountStatusControlButton.setText(newUser.getStatus().equals("Заморожен") ? "Разморозить" : "Заморозить");
+
+            var response = ServerClient.getInstance().sendRequest(new Request("system/portfolioHistory", newUser.getName()));
+            ResponseFailureUtils.handle(response);
+
+            var history = ((List<PortfolioActionRecord>)response.getPayload()).stream()
+                    .sorted((a, b) -> b.getDateTime().compareTo(a.getDateTime()))
+                    .map(PortfolioAction::new).toList();
+            portfolioHistory.setAll(history);
         });
+
+        historyDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        historyDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<>() {
+            @Override
+            public String toString(LocalDateTime o) {
+                return logFormatter.format(o);
+            }
+
+            @Override
+            public LocalDateTime fromString(String s) {
+                // not needed
+                return null;
+            }
+        }));
+        historyActionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
+        historyBalanceColumn.setCellValueFactory(new PropertyValueFactory<>("balanceDelta"));
+        historyCryptoColumn.setCellValueFactory(new PropertyValueFactory<>("cryptocurrencyName"));
+        historyCryptoChangeColumn.setCellValueFactory(new PropertyValueFactory<>("cryptocurrencyDelta"));
+        userPortfolioHistoryTableView.setItems(portfolioHistory);
 
         logDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         logDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<>() {
@@ -210,7 +251,7 @@ public class MarketControlController implements Initializable {
         logInfoColumn.setCellValueFactory(new PropertyValueFactory<>("info"));
         logsTableView.setItems(logs);
 
-        numLogsComboBox.getItems().addAll(100, 500, 1000);
+        numLogsComboBox.getItems().addAll(100, 500, 1000, 5000, 10000);
         numLogsComboBox.getSelectionModel().selectFirst();
 
         xAxis.setTickLabelFormatter(new StringConverter<>() {
