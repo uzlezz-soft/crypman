@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
 public class AssetPurchaseDialogController implements Initializable {
 
     @FXML
+    private Slider daysPeriodSlider;
+    @FXML
     private ComboBox<String> cryptoComboBox;
     @FXML
     private Label optimizationStatusLabel;
@@ -99,6 +101,13 @@ public class AssetPurchaseDialogController implements Initializable {
         targetReturnSliderContainer.widthProperty().addListener((ov, oldWidth, newWidth) -> targetReturnSlider.setPrefWidth(newWidth.doubleValue()));
         targetReturnSliderContainer.prefWidthProperty().bind(targetReturnHBox.widthProperty().multiply(0.7));
         cryptoComboBox.getItems().addAll(MarketState.getCryptocurrencies().stream().map(Cryptocurrency::getName).toList());
+
+        daysPeriodSlider.valueProperty().addListener((ov, oldValue, newValue) -> {
+            if (newValue == null) return;
+            for (var cell : amountMap.values()) {
+                cell.refreshRiskAndReturns(newValue.intValue());
+            }
+        });
     }
 
     private void updateStats(double risk, double returns) {
@@ -107,7 +116,7 @@ public class AssetPurchaseDialogController implements Initializable {
     }
 
     public void onComputeStatsButtonPressed() {
-        var payload = new CryptocurrencyGroup(7, amountMap.entrySet().stream()
+        var payload = new CryptocurrencyGroup(getDaysPeriod(), amountMap.entrySet().stream()
                 .collect(Collectors.toMap(x -> x.getKey().getName(), x -> x.getValue().getAmount()
                         .divide(totalCost, 15, RoundingMode.HALF_EVEN).doubleValue())));
         var response = ServerClient.getInstance().sendRequest(new Request("portfolio/calculateStats", payload));
@@ -140,13 +149,13 @@ public class AssetPurchaseDialogController implements Initializable {
     }
 
     public void onOptimizeForTargetReturnButtonPressed() {
-        var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0').replace(",", ".")) / 100.0, 7,
+        var payload = new Optimization(true, Double.valueOf(targetReturnLabel.getText().replace('%', '0').replace(",", ".")) / 100.0, getDaysPeriod(),
                 assetListView.getItems().stream().map(Cryptocurrency::getName).toList());
         applyOptimization(payload);
     }
 
     public void onOptimizeForMinRiskButtonPressed() {
-        var payload = new Optimization(false, 0.0, 7,
+        var payload = new Optimization(false, 0.0, getDaysPeriod(),
                 assetListView.getItems().stream().map(Cryptocurrency::getName).toList());
         applyOptimization(payload);
     }
@@ -167,5 +176,9 @@ public class AssetPurchaseDialogController implements Initializable {
         cryptoComboBox.getItems().add(crypto.getName());
         amountMap.remove(crypto);
         assetListView.getItems().remove(assetListView.getSelectionModel().getSelectedIndex());
+    }
+
+    public int getDaysPeriod() {
+        return (int)daysPeriodSlider.getValue();
     }
 }

@@ -10,6 +10,10 @@ import net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController;
 import net.uzlezz.crypman.gui.controllers.embedded.AssetPurchaseCellController;
 import net.uzlezz.crypman.gui.data.Cryptocurrency;
 import net.uzlezz.crypman.gui.utils.CustomEvents;
+import net.uzlezz.crypman.gui.utils.ResponseFailureUtils;
+import net.uzlezz.crypman.network.Request;
+import net.uzlezz.crypman.network.ServerClient;
+import net.uzlezz.crypman.network.schemas.request.CryptocurrencyStats;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +31,8 @@ public class AssetPurchaseListCell extends ListCell<Cryptocurrency> {
 
     private ListView<Cryptocurrency> owner;
     private AssetPurchaseDialogController owningController;
+
+    private Cryptocurrency cryptocurrency;
 
     public AssetPurchaseListCell(ListView<Cryptocurrency> owner, AssetPurchaseDialogController controller) {
         super();
@@ -51,6 +57,8 @@ public class AssetPurchaseListCell extends ListCell<Cryptocurrency> {
                     e.printStackTrace();
                 }
             }
+            cryptocurrency = crypto;
+            owningController.getAmountMap().put(crypto, this);
 
             controller.getNameLabel().setText(crypto.getFriendlyName());
             controller.getAmountLabel().setText(String.format("%.9f %s", amount, crypto.getName()));
@@ -68,10 +76,10 @@ public class AssetPurchaseListCell extends ListCell<Cryptocurrency> {
 
                     var cryptoAmount = amount.divide(crypto.getPrice(), 15, RoundingMode.HALF_EVEN);
                     controller.getAmountLabel().setText(String.format("%.9f %s", cryptoAmount, crypto.getName()));
-                    owningController.getAmountMap().put(crypto, this);
                     owner.fireEvent(new CustomEvents(CustomEvents.ASSET_AMOUNT_CHANGED));
                 }
             });
+            refreshRiskAndReturns(owningController.getDaysPeriod());
 
             Image icon = loadIcon(crypto.getIcon());
             controller.getIconView().setImage(icon);
@@ -86,5 +94,20 @@ public class AssetPurchaseListCell extends ListCell<Cryptocurrency> {
 
     public void setAmount(String amount) {
         controller.getAmountField().setText(amount);
+    }
+
+    public void refreshRiskAndReturns(int daysPeriod) {
+        double risk = 0.0;
+        double returns = 0.0;
+        try {
+            var response = ServerClient.getInstance().sendRequest(new Request("market/stats", new CryptocurrencyStats(cryptocurrency.getName(), daysPeriod)));
+            ResponseFailureUtils.handle(response);
+
+            var payload = (net.uzlezz.crypman.network.schemas.response.CryptocurrencyStats)response.getPayload();
+            risk = payload.getRisk();
+            returns = payload.getReturns();
+        } catch (RuntimeException ignored) {}
+        controller.getRiskLabel().setText(String.format("%.2f%%", risk * 100.0));
+        controller.getReturnsLabel().setText(String.format("%.2f%%", returns * 100.0));
     }
 }

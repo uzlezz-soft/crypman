@@ -9,6 +9,10 @@ import lombok.Getter;
 @Getter
 public class AssetPurchaseCellController {
     @FXML
+    private Label riskLabel;
+    @FXML
+    private Label returnsLabel;
+    @FXML
     private TextField amountField;
     @FXML
     private ImageView iconView;

@@ -16,6 +16,11 @@
                     </HBox>
                     <Separator />
                     <VBox style="-fx-padding: 10 0 10 0">
+                        <Label text="Количество дней для анализа" />
+                        <Slider min="7" max="60" showTickMarks="true" showTickLabels="true" fx:id="daysPeriodSlider" blockIncrement="1" />
+                    </VBox>
+                    <Separator />
+                    <VBox style="-fx-padding: 10 0 10 0">
                         <HBox>
                             <Label text="Риск:" />
                             <Pane HBox.hgrow="ALWAYS" />
