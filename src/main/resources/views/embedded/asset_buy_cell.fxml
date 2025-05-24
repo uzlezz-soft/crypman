@@ -5,8 +5,9 @@
 <?import javafx.scene.control.*?>
 
 <?import javafx.geometry.Insets?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.uzlezz.crypman.gui.controllers.embedded.AssetPurchaseCellController"
-      spacing="10" alignment="TOP_LEFT">
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="net.uzlezz.crypman.gui.controllers.embedded.AssetPurchaseCellController"
+      spacing="10" alignment="TOP_LEFT" styleClass="list-cell" stylesheets="@../material.css">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
     </padding>
@@ -14,23 +15,23 @@
 
     <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">
         <HBox alignment="TOP_LEFT" spacing="10">
-            <Label fx:id="nameLabel" style="-fx-font-weight: bold;" />
+            <Label fx:id="nameLabel" styleClass="bold" />
             <Pane HBox.hgrow="ALWAYS" />
             <VBox alignment="CENTER_LEFT">
                 <HBox>
-                    <Label text="Риск: " style="-fx-font-size: 12px" />
-                    <Label fx:id="riskLabel" text="0.00%" style="-fx-font-size: 12px" />
+                    <Label text="Риск: " styleClass="secondary" />
+                    <Label fx:id="riskLabel" text="0.00%" styleClass="secondary" />
                 </HBox>
                 <HBox>
-                    <Label text="Доход: " style="-fx-font-size: 12px" />
-                    <Label fx:id="returnsLabel" text="0.00%" style="-fx-font-size: 12px" />
+                    <Label text="Доход: " styleClass="secondary" />
+                    <Label fx:id="returnsLabel" text="0.00%" styleClass="secondary" />
                 </HBox>
             </VBox>
 
             <!--<Label fx:id="priceLabel" style="-fx-font-size: 14px;" alignment="CENTER_RIGHT" />-->
             <VBox alignment="CENTER_RIGHT" spacing="0">
                 <TextField fx:id="amountField" promptText="\$0.00" prefWidth="80"/>
-                <Label fx:id="amountLabel" style="-fx-font-size: 12px; -fx-text-fill: gray;" />
+                <Label fx:id="amountLabel" styleClass="secondary" />
             </VBox>
         </HBox>
         <AnchorPane BorderPane.alignment="CENTER">

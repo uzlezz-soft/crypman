@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.text.Text?>
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" style="-fx-padding: 40"
-            fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController">
-        <HBox alignment="CENTER">
-            <TextField fx:id="moneyAmountField"  promptText="Количество" />
-            <Text>$</Text>
-        </HBox>
-        <Pane minHeight="5" />
-        <Button text="Подтвердить" onAction="#onAddMoneyButtonPressed" />
+
+<VBox alignment="CENTER" stylesheets="@../material.css" styleClass="md-pane"
+      xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AddMoneyDialogController">
+    <HBox alignment="CENTER" spacing="5">
+        <TextField fx:id="moneyAmountField" promptText="Количество" styleClass="md-input" />
+        <Text>$</Text>
+    </HBox>
+    <Pane minHeight="5" />
+    <Button text="Подтвердить" onAction="#onAddMoneyButtonPressed" styleClass="md-button,md-primary" />
 </VBox>

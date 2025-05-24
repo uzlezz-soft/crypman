@@ -3,23 +3,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefWidth="800" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AssetSellDialogController">
-    <center>
-        <VBox style="-fx-padding: 20 20 20 20">
-            <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
-                <ListView fx:id="assetListView" />
-                <VBox style="-fx-padding: 5 5 5 5">
-                    <HBox>
-                        <Label fx:id="totalReturnsLabel" text="\$0.00" />
-                        <Pane HBox.hgrow="ALWAYS" />
-                        <Label fx:id="balanceLabel" text="Баланс: $0.00" />
-                    </HBox>
-                </VBox>
-            </SplitPane>
-            <HBox style="-fx-padding: 5 0 0 0">
+<VBox alignment="CENTER" spacing="10" stylesheets="@../material.css" styleClass="md-pane"
+      xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AssetSellDialogController">
+
+    <SplitPane dividerPositions="0.85" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+        <ListView fx:id="assetListView" />
+        <VBox spacing="10">
+            <HBox>
+                <Label fx:id="totalReturnsLabel" text="\$0.00" />
                 <Pane HBox.hgrow="ALWAYS" />
-                <Button onAction="#onConfirmButtonPressed" text="Подтвердить" />
+                <Label fx:id="balanceLabel" text="Баланс: $0.00" />
             </HBox>
         </VBox>
-    </center>
-</BorderPane>
+    </SplitPane>
+
+    <HBox spacing="10">
+        <Pane HBox.hgrow="ALWAYS" />
+        <Button text="Подтвердить" onAction="#onConfirmButtonPressed" styleClass="md-button,md-primary" />
+    </HBox>
+</VBox>

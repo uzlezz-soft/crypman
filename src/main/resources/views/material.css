@@ -1,0 +1,378 @@
+.root {
+    -fx-background-color: #FAFAFA;
+    -fx-padding: 40;
+}
+
+.title {
+    -fx-fill: #212121;
+    -fx-font-size: 24px;
+    -fx-font-family: "Helvetica Neue", sans-serif;
+    -fx-font-weight: bold;
+}
+
+.md-input {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #9E9E9E;
+    -fx-text-fill: #212121;
+    -fx-font-size: 14px;
+    -fx-padding: 8 4 6 4;
+    -fx-prompt-text-fill: derive(-fx-text-fill, -30%);
+    -fx-focus-color: #3F51B5;
+    -fx-faint-focus-color: transparent;
+}
+
+.md-input:focused {
+    -fx-border-color: #3F51B5;
+    -fx-border-width: 0 0 2 0;
+    -fx-effect: dropshadow(gaussian, #3F51B5, 4, 0, 0, 1);
+}
+
+
+.md-input .text {
+    -fx-prompt-text-fill: derive(-fx-text-fill, -30%);
+}
+
+.md-button:disabled {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #9e9e9e;
+    -fx-cursor: default;
+    -fx-effect: none;
+}
+
+.md-input:disabled {
+    -fx-opacity: 0.6;
+    -fx-text-fill: #9e9e9e;
+    -fx-border-color: #cccccc;
+    -fx-focus-color: transparent;
+}
+
+.tooltip {
+    -fx-background-color: #323232;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 6 10 6 10;
+    -fx-background-radius: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 4, 0, 0, 2);
+}
+
+
+
+/* Button Base */
+.md-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #616161;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0.3, 0, 1);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+/* Primary Button */
+.md-button.md-primary {
+    -fx-background-color: #3F51B5;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.md-button.md-primary:hover {
+    -fx-background-color: #5C6BC0;
+}
+.md-button.md-primary:pressed {
+    -fx-background-color: #3949AB;
+}
+
+.md-button, .md-input {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+
+
+/* Hover */
+.md-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Pressed */
+.md-button:pressed {
+    -fx-background-color: #cccccc;
+}
+
+
+
+.dialog-root {
+    -fx-padding: 40;
+    -fx-background-color: #ebebeb;
+}
+
+.dialog-content {
+    -fx-padding: 20;
+}
+
+.title-text {
+    -fx-fill: #1f1f1f;
+    -fx-font-size: 24px;
+    -fx-font-family: "Helvetica Neue";
+}
+
+.form-separator {
+    -fx-background-color: #b5b5b5;
+}
+
+.input-field {
+    -fx-background-color: #d9d9d9;
+    -fx-text-fill: #363636;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+    -fx-font-size: 14;
+}
+
+.button-primary {
+    -fx-background-color: #b3b3b3;
+    -fx-text-fill: #1f1f1f;
+    -fx-font-size: 14;
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+}
+
+.button-secondary {
+    -fx-background-color: #1f1f1f;
+    -fx-border-color: #1f1f1f;
+    -fx-text-fill: #9e9e9e;
+    -fx-font-size: 14;
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === ListView Cells === */
+.list-cell {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #dedede;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10;
+    -fx-background-insets: 0;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #e6e6e6;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #1f1f1f;
+}
+
+/* Ячейки: Общие элементы */
+.list-cell Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #1f1f1f;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.list-cell Label.bold {
+    -fx-font-weight: bold;
+}
+
+.list-cell Label.secondary {
+    -fx-font-size: 12px;
+    -fx-text-fill: #777777;
+}
+
+/* Поля ввода внутри ячеек */
+.list-cell TextField {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #b5b5b5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 5 8;
+    -fx-font-size: 13;
+}
+
+/* Слайдер внутри ячеек */
+.list-cell Slider {
+    -fx-padding: 4;
+}
+
+.list-cell Slider .track {
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 4;
+}
+
+.list-cell Slider .thumb {
+    -fx-background-color: #333333;
+    -fx-background-radius: 6;
+}
+
+/* Отступы и вложенные layout'ы */
+.list-cell HBox, .list-cell VBox {
+    -fx-spacing: 8;
+}
+
+.list-cell ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+    -fx-smooth: true;
+    -fx-cursor: hand;
+}
+
+.primary {
+    -fx-font-size: 14px;
+    -fx-text-fill: #1f1f1f;
+}
+
+.bold {
+    -fx-font-weight: bold;
+}
+
+.secondary {
+    -fx-font-size: 12px;
+    -fx-text-fill: #777777;
+}
+
+.md-toolbar {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.02), 2, 0.1, 0, 1);
+}
+
+
+
+
+
+/* Метки для текста - md-label */
+.md-label {
+    -fx-font-family: "Roboto", "Helvetica Neue", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #212121; /* Цвет текста для материала */
+    -fx-font-weight: 400;
+}
+
+/* Слайдер в стиле Material Design */
+.md-slider {
+    -fx-padding: 6 0 6 0;
+    -fx-background-color: transparent;
+}
+
+/* Трек слайдера - полоска */
+.md-slider .track {
+    -fx-background-color: #BDBDBD; /* светло-серый для неактивной части */
+    -fx-background-radius: 2;
+    -fx-padding: 0 0 0 0;
+    -fx-pref-height: 4;
+}
+
+/* Заполненная часть трека */
+.md-slider .filled-track {
+    -fx-background-color: #3F51B5; /* основной цвет материала */
+    -fx-background-radius: 2;
+    -fx-pref-height: 4;
+}
+
+/* Ползунок (thumb) слайдера */
+.md-slider .thumb {
+    -fx-background-color: #3F51B5;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(63,81,181,0.4), 4, 0, 0, 1);
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+
+/* Эффект наведения на ползунок */
+.md-slider .thumb:hover {
+    -fx-effect: dropshadow(gaussian, rgba(63,81,181,0.7), 6, 0, 0, 2);
+}
+
+/* Фокус слайдера */
+.md-slider:focused .thumb {
+    -fx-effect: dropshadow(gaussian, rgba(63,81,181,0.8), 8, 0, 0, 3);
+}
+
+
+
+
+
+
+
+
+
+/* Добавим стиль для пустого пространства таблицы (placeholder) */
+.table-view .placeholder {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-padding: 20;
+}
+
+/* Фокус на строке */
+.table-row-cell:focused {
+    -fx-border-color: #3F51B5;
+    -fx-border-width: 0 0 0 3; /* цветная полоска слева */
+    -fx-background-color: #e8eaf6; /* легкий синий оттенок */
+}
+
+/* Выделение при наведении на заголовок колонки */
+.table-view .column-header:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-cursor: hand;
+}
+
+/* Индикатор сортировки в заголовках */
+.table-view .column-header .sort-arrow {
+    -fx-shape: "M0 0 L8 0 L4 5 Z"; /* треугольник */
+    -fx-background-color: #3F51B5;
+    -fx-padding: 0 4 0 4;
+    -fx-alignment: center;
+    -fx-opacity: 0.7;
+}
+
+/* Disabled состояние таблицы (если нужно) */
+.table-view:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Горизонтальные линии между строками */
+.table-row-cell {
+    -fx-border-color: #dedede;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Поддержка выделения нескольких строк */
+.table-row-cell:selected {
+    -fx-background-color: #c5cae9; /* светлый синий */
+    -fx-text-fill: #1f1f1f;
+    -fx-border-color: #3F51B5;
+    -fx-border-width: 0 0 0 3;
+}
+
+/* Переключение курсора при наведении на строки */
+.table-row-cell:hover {
+    -fx-cursor: hand;
+}

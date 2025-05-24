@@ -5,28 +5,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ebebeb; -fx-padding: 40;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.LoginController">
+<VBox alignment="CENTER" spacing="20.0" styleClass="root" xmlns="http://javafx.com/javafx/17.0.6"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.uzlezz.crypman.gui.controllers.LoginController"
+      stylesheets="@material.css">
 
     <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../images/logo150.png" />
+        <Image url="@../images/logo150.png"/>
     </ImageView>
 
+    <Text text="Авторизация" styleClass="title"/>
 
-    <Text style="-fx-fill: #1f1f1f;" text="Авторизация">
-        <font>
-            <Font name="Helvetica Neue" size="24" />
-        </font>
-    </Text>
+    <Separator prefWidth="300"/>
 
-    <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
+    <TextField fx:id="usernameField" maxWidth="300" promptText="Имя пользователя" styleClass="md-input"/>
+    <PasswordField fx:id="passwordField" maxWidth="300" promptText="Пароль" styleClass="md-input"/>
 
-    <TextField fx:id="usernameField" maxWidth="300" promptText="Имя пользователя" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
-    <PasswordField fx:id="passwordField" maxWidth="300" promptText="Пароль" style="-fx-background-color: #d9d9d9; -fx-border-color: #d9d9d9; -fx-text-fill: #363636; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14;" />
+    <Button maxWidth="200" onAction="#onLoginButtonPressed" text="Войти" styleClass="md-button, md-primary"/>
 
-    <Button maxWidth="200" onAction="#onLoginButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Войти" />
+    <Separator prefWidth="300"/>
 
-    <Separator prefWidth="300" style="-fx-background-color: #b5b5b5;" />
-
-    <Button maxWidth="200" onAction="#onRegButtonPressed" style="-fx-background-color: #1f1f1f; -fx-border-color: #1f1f1f; -fx-text-fill: #9e9e9e; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Регистрация" />
-
+    <Button maxWidth="200" onAction="#onRegButtonPressed" text="Регистрация" styleClass="md-button"/>
 </VBox>

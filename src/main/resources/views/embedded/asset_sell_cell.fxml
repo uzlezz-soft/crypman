@@ -6,7 +6,7 @@
 
 <?import javafx.geometry.Insets?>
 <HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.uzlezz.crypman.gui.controllers.embedded.AssetSellCellController"
-      spacing="10" alignment="TOP_LEFT">
+      spacing="10" alignment="TOP_LEFT" styleClass="list-cell" stylesheets="@../material.css">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
     </padding>
@@ -14,7 +14,7 @@
 
     <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">
         <HBox alignment="TOP_LEFT" spacing="10">
-            <Label fx:id="nameLabel" style="-fx-font-weight: bold;" />
+            <Label fx:id="nameLabel" styleClass="bold" />
             <Pane HBox.hgrow="ALWAYS" />
             <Label fx:id="totalAmountLabel" />
 
@@ -26,13 +26,10 @@
             </VBox>
         </HBox>
         <HBox>
-            <Label fx:id="priceLabel" style="-fx-text-fill: #1f1f1f;" />
+            <Label fx:id="priceLabel" />
             <Pane HBox.hgrow="ALWAYS" />
-            <Label fx:id="returnsLabel" style="-fx-font-size: 14" text="\$0.00" />
+            <Label fx:id="returnsLabel" styleClass="primary" text="\$0.00" />
         </HBox>
-        <!--<AnchorPane BorderPane.alignment="CENTER">
-
-        </AnchorPane>-->
     </VBox>
 
 </HBox>

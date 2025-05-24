@@ -6,7 +6,7 @@
 
 <?import javafx.geometry.Insets?>
 <HBox xmlns:fx="http://javafx.com/fxml" fx:controller="net.uzlezz.crypman.gui.controllers.embedded.PortfolioHistoryCellController"
-      spacing="10" alignment="TOP_LEFT">
+      spacing="10" alignment="TOP_LEFT" styleClass="list-cell" stylesheets="@../material.css">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
     </padding>
@@ -14,16 +14,16 @@
 
     <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">
         <HBox alignment="TOP_LEFT" spacing="10">
-            <Label fx:id="nameLabel" style="-fx-font-weight: bold;" />
+            <Label fx:id="nameLabel" styleClass="bold" />
             <Pane HBox.hgrow="ALWAYS" />
 
             <VBox alignment="CENTER_RIGHT" spacing="0">
-                <Label fx:id="balanceChangeLabel" style="-fx-font-size: 14px; -fx-text-fill: #1f1f1f;" />
-                <Label fx:id="cryptoChangeLabel" style="-fx-font-size: 12px; -fx-text-fill: gray;" />
+                <Label fx:id="balanceChangeLabel" />
+                <Label fx:id="cryptoChangeLabel" styleClass="secondary" />
             </VBox>
         </HBox>
         <AnchorPane BorderPane.alignment="CENTER">
-            <Label fx:id="amountLabel" style="-fx-text-fill: #1f1f1f;" />
+            <Label fx:id="amountLabel" />
         </AnchorPane>
     </VBox>
 

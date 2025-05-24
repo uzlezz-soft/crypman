@@ -3,75 +3,61 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefWidth="800" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController">
-    <center>
-        <VBox style="-fx-padding: 20 20 20 20">
-            <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
-                <ListView fx:id="assetListView" />
-                <VBox style="-fx-padding: 5 5 5 5">
-                    <HBox>
-                        <Label fx:id="totalPriceLabel" text="\$0.00" />
-                        <Pane HBox.hgrow="ALWAYS" />
-                        <Label fx:id="balanceLabel" text="Баланс: $0.00" />
-                    </HBox>
-                    <Separator />
-                    <VBox style="-fx-padding: 10 0 10 0">
-                        <Label text="Количество дней для анализа" />
-                        <Slider min="7" max="60" showTickMarks="true" showTickLabels="true" fx:id="daysPeriodSlider" blockIncrement="1" />
-                    </VBox>
-                    <Separator />
-                    <VBox style="-fx-padding: 10 0 10 0">
-                        <HBox>
-                            <Label text="Риск:" />
-                            <Pane HBox.hgrow="ALWAYS" />
-                            <Label fx:id="totalRiskLabel" text="0%" />
-                        </HBox>
-                        <HBox>
-                            <Label text="Доходность:" />
-                            <Pane HBox.hgrow="ALWAYS" />
-                            <Label fx:id="totalReturnLabel" text="0%" />
-                        </HBox>
+<VBox alignment="CENTER" spacing="10" stylesheets="@../material.css" styleClass="md-pane"
+      xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.uzlezz.crypman.gui.controllers.dialogs.AssetPurchaseDialogController">
 
-                        <HBox>
-                            <Pane HBox.hgrow="ALWAYS" />
-                            <Button text="Посчитать статистику" onAction="#onComputeStatsButtonPressed" />
-                        </HBox>
-                    </VBox>
-                    <Separator />
-                    <VBox style="-fx-padding: 10 0 10 0">
-                        <HBox fx:id="targetReturnHBox">
-                            <HBox fx:id="targetReturnSliderContainer">
-                                <Slider fx:id="targetReturnSlider" min="-9.96578428" max="8.96578428466" />
-                            </HBox>
-                            <Pane HBox.hgrow="ALWAYS" />
-                            <Label fx:id="targetReturnLabel" text="0%" />
-                        </HBox>
-                        <HBox>
-                            <Pane HBox.hgrow="ALWAYS" />
-                            <Button text="Оптимизировать под % дохода" onAction="#onOptimizeForTargetReturnButtonPressed" />
-                        </HBox>
-                    </VBox>
-                    <Separator />
-                    <VBox style="-fx-padding: 10 0 10 0">
-                        <HBox>
-                            <Pane HBox.hgrow="ALWAYS" />
-                            <Button text="Оптимизировать под минимальный риск" onAction="#onOptimizeForMinRiskButtonPressed" />
-                        </HBox>
-                    </VBox>
-                    <Separator />
-                    <HBox style="-fx-padding: 10 0 0 0">
-                        <Label text="Оптимизация: " />
-                        <Label fx:id="optimizationStatusLabel" text="-" />
-                    </HBox>
-                </VBox>
-            </SplitPane>
-            <HBox style="-fx-padding: 5 0 0 0">
-                <ComboBox fx:id="cryptoComboBox" />
-                <Button text="+" onAction="#addCryptoButtonPressed" />
-                <Button text="-" onAction="#removeCryptoButtonPressed" />
+    <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+        <ListView fx:id="assetListView" />
+
+        <VBox spacing="10">
+            <HBox>
+                <Label fx:id="totalPriceLabel" text="\$0.00" />
                 <Pane HBox.hgrow="ALWAYS" />
-                <Button onAction="#onConfirmButtonPressed" text="Подтвердить" />
+                <Label fx:id="balanceLabel" text="Баланс: $0.00" />
             </HBox>
+
+            <VBox spacing="6">
+                <Label text="Количество дней для анализа" styleClass="md-label" />
+                <Slider min="7" max="60" fx:id="daysPeriodSlider" showTickLabels="true" showTickMarks="true" blockIncrement="1"
+                        styleClass="md-slider" />
+            </VBox>
+
+            <!-- Риск и доходность -->
+            <VBox spacing="6">
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="Риск:" styleClass="md-label" />
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Label fx:id="totalRiskLabel" text="0%" styleClass="md-label" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="Доходность:" styleClass="md-label" />
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Label fx:id="totalReturnLabel" text="0%" styleClass="md-label" />
+                </HBox>
+                <Button text="Посчитать статистику" onAction="#onComputeStatsButtonPressed" styleClass="md-button" />
+            </VBox>
+
+            <!-- Целевой доход -->
+            <VBox spacing="6">
+                <HBox fx:id="targetReturnHBox" alignment="CENTER_LEFT" spacing="5">
+                    <HBox fx:id="targetReturnSliderContainer" VBox.vgrow="ALWAYS">
+                        <Slider fx:id="targetReturnSlider" min="-9.96578428" max="8.96578428466"
+                                styleClass="md-slider" />
+                    </HBox>
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Label fx:id="targetReturnLabel" text="0%" styleClass="md-label" />
+                </HBox>
+                <Button text="Оптимизировать под % дохода" onAction="#onOptimizeForTargetReturnButtonPressed" styleClass="md-button" />
+            </VBox>
         </VBox>
-    </center>
-</BorderPane>
+    </SplitPane>
+
+    <HBox spacing="10">
+        <ComboBox fx:id="cryptoComboBox" styleClass="md-input" />
+        <Button text="+" onAction="#addCryptoButtonPressed" styleClass="md-button" />
+        <Button text="-" onAction="#removeCryptoButtonPressed" styleClass="md-button" />
+        <Pane HBox.hgrow="ALWAYS" />
+        <Button text="Подтвердить" onAction="#onConfirmButtonPressed" styleClass="md-button,md-primary" />
+    </HBox>
+</VBox>

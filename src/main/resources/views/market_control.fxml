@@ -6,42 +6,40 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.scene.Group?>
-<BorderPane style="-fx-background-color: #ebebeb; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.MarketControlController">
+<BorderPane style="-fx-background-color: #ebebeb; -fx-padding: 20;"
+            xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="net.uzlezz.crypman.gui.controllers.MarketControlController"
+            styleClass="root" stylesheets="@material.css">
 
     <top>
-        <VBox spacing="5.0">
-            <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
-                <Label fx:id="usernameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <VBox spacing="5.0" styleClass="md-toolbar">
+            <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10" styleClass="md-toolbar">
+                <Label fx:id="usernameLabel" styleClass="title" />
                 <Pane HBox.hgrow="ALWAYS" />
-                <Button onAction="#onRefreshButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Обновить" />
-                <Button onAction="#onBackButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14; -fx-padding: 10; -fx-border-radius: 5;" text="Портфель" />
+                <Button onAction="#onRefreshButtonPressed" text="Обновить" styleClass="md-button,md-primary" />
+                <Button onAction="#onBackButtonPressed" text="Портфель" styleClass="md-button,md-primary" />
             </HBox>
-            <Separator prefWidth="600" style="-fx-background-color: #b5b5b5;" />
+            <Separator styleClass="form-separator" />
         </VBox>
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
-            <Text style="-fx-fill: #1f1f1f;" text="Управление">
-                <font>
-                    <Font name="Helvetica Neue" size="24" />
-                </font>
-            </Text>
-
+        <VBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS" style="-fx-padding: 20;">
+            <Text text="Управление" styleClass="title-text" />
             <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
 
                 <Tab fx:id="tabCrypto" text="Криптовалюта">
                     <SplitPane dividerPositions="0.6" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
                         <SplitPane dividerPositions="0.3" orientation="VERTICAL" VBox.vgrow="ALWAYS">
-                            <TableView fx:id="cryptoTableView" layoutX="10" layoutY="10" prefHeight="300.0" prefWidth="600.0">
+                            <TableView fx:id="cryptoTableView" prefHeight="300" prefWidth="600" styleClass="md-table">
                                 <columns>
-                                    <TableColumn fx:id="cryptoNameColumn" prefWidth="150.0" text="Идентификатор" />
-                                    <TableColumn fx:id="cryptoFriendlyNameColumn" prefWidth="200.0" text="Имя" />
-                                    <TableColumn fx:id="cryptoIconColumn" prefWidth="200.0" text="Иконка" />
+                                    <TableColumn fx:id="cryptoNameColumn" prefWidth="150" text="Идентификатор" />
+                                    <TableColumn fx:id="cryptoFriendlyNameColumn" prefWidth="200" text="Имя" />
+                                    <TableColumn fx:id="cryptoIconColumn" prefWidth="200" text="Иконка" />
                                 </columns>
                             </TableView>
 
-                            <LineChart fx:id="priceChart" animated="false" createSymbols="false" legendVisible="false" VBox.vgrow="ALWAYS">
+                            <LineChart fx:id="priceChart" animated="false" createSymbols="false" legendVisible="false" VBox.vgrow="ALWAYS" styleClass="md-chart">
                                 <xAxis>
                                     <NumberAxis label="Время" fx:id="xAxis" />
                                 </xAxis>
@@ -51,37 +49,37 @@
                             </LineChart>
                         </SplitPane>
 
-                        <TabPane prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane prefWidth="600" tabClosingPolicy="UNAVAILABLE" styleClass="md-tabpane">
                             <Tab text="Добавить">
-                                <VBox alignment="TOP_LEFT" spacing="10" style="-fx-padding: 10;">
-                                    <TextField fx:id="addNameField" promptText="Идентификатор" />
-                                    <TextField fx:id="addFriendlyNameField" promptText="Имя" />
-                                    <TextField fx:id="addIconField" promptText="Иконка" />
-                                    <Button onAction="#onAddButtonPressed" text="Добавить" />
+                                <VBox alignment="TOP_LEFT" spacing="10" styleClass="form-content">
+                                    <TextField fx:id="addNameField" promptText="Идентификатор" styleClass="md-input" />
+                                    <TextField fx:id="addFriendlyNameField" promptText="Имя" styleClass="md-input" />
+                                    <TextField fx:id="addIconField" promptText="Иконка" styleClass="md-input" />
+                                    <Button onAction="#onAddButtonPressed" text="Добавить" styleClass="md-button,md-primary" />
                                 </VBox>
                             </Tab>
 
                             <Tab text="Изменить">
-                                <VBox alignment="TOP_LEFT" spacing="10" style="-fx-padding: 10;">
-                                    <TextField fx:id="editNameField" promptText="Идентификатор" />
-                                    <TextField fx:id="editFriendlyNameField" promptText="Имя" />
-                                    <TextField fx:id="editIconField" promptText="Иконка" />
-                                    <Button onAction="#onEditButtonPressed" text="Сохранить изменения" />
-                                    <Separator style="-fx-background-color: #b5b5b5;" />
-                                    <Button onAction="#onDeleteButtonPressed" text="Удалить криптовалюту" />
+                                <VBox alignment="TOP_LEFT" spacing="10" styleClass="form-content">
+                                    <TextField fx:id="editNameField" promptText="Идентификатор" styleClass="md-input" />
+                                    <TextField fx:id="editFriendlyNameField" promptText="Имя" styleClass="md-input" />
+                                    <TextField fx:id="editIconField" promptText="Иконка" styleClass="md-input" />
+                                    <Button onAction="#onEditButtonPressed" text="Сохранить изменения" styleClass="md-button,md-primary" />
+                                    <Separator styleClass="form-separator" />
+                                    <Button onAction="#onDeleteButtonPressed" text="Удалить криптовалюту" styleClass="md-button" />
                                 </VBox>
                             </Tab>
 
                             <Tab text="Управление ценой">
-                                <VBox alignment="TOP_LEFT" spacing="10" style="-fx-padding: 10;">
-                                    <TextField fx:id="priceField" promptText="Цена" />
-                                    <DatePicker fx:id="priceDatePicker" promptText="Дата" />
-                                    <TextField fx:id="priceTimeField" promptText="HH:mm:ss" />
-                                    <Button onAction="#onRegisterPriceButtonPressed" text="Зарегистрировать" />
-                                    <Separator style="-fx-background-color: #b5b5b5;" />
-                                    <HBox>
-                                        <Button onAction="#loadPriceCSVButtonPressed" text="Загрузить из CSV" />
-                                        <Button onAction="#loadPriceCSVHelpButtonPressed" text="?" />
+                                <VBox alignment="TOP_LEFT" spacing="10" styleClass="form-content">
+                                    <TextField fx:id="priceField" promptText="Цена" styleClass="md-input" />
+                                    <DatePicker fx:id="priceDatePicker" promptText="Дата" styleClass="md-input" />
+                                    <TextField fx:id="priceTimeField" promptText="HH:mm:ss" styleClass="md-input" />
+                                    <Button onAction="#onRegisterPriceButtonPressed" text="Зарегистрировать" styleClass="md-button,md-primary" />
+                                    <Separator styleClass="form-separator" />
+                                    <HBox spacing="10">
+                                        <Button onAction="#loadPriceCSVButtonPressed" text="Загрузить из CSV" styleClass="md-button" />
+                                        <Button onAction="#loadPriceCSVHelpButtonPressed" text="?" styleClass="md-button" />
                                     </HBox>
                                 </VBox>
                             </Tab>
@@ -91,37 +89,37 @@
 
                 <Tab fx:id="tabUsers" text="Пользователи">
                     <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
-                        <TableView fx:id="usersTableView" layoutX="10" layoutY="10" prefHeight="300.0" prefWidth="750.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="usersTableView" prefHeight="300" prefWidth="750" VBox.vgrow="ALWAYS" styleClass="md-table">
                             <columns>
-                                <TableColumn fx:id="userNameColumn" prefWidth="300.0" text="Имя" />
-                                <TableColumn fx:id="userBalanceColumn" prefWidth="100.0" text="Баланс" />
-                                <TableColumn fx:id="userRoleColumn" prefWidth="150.0" text="Роли" />
-                                <TableColumn fx:id="userStatusColumn" prefWidth="200.0" text="Статус" />
+                                <TableColumn fx:id="userNameColumn" prefWidth="300" text="Имя" />
+                                <TableColumn fx:id="userBalanceColumn" prefWidth="100" text="Баланс" />
+                                <TableColumn fx:id="userRoleColumn" prefWidth="150" text="Роли" />
+                                <TableColumn fx:id="userStatusColumn" prefWidth="200" text="Статус" />
                             </columns>
                         </TableView>
 
-                        <BorderPane VBox.vgrow="ALWAYS">
+                        <BorderPane VBox.vgrow="ALWAYS" styleClass="md-panel">
                             <top>
-                                <VBox>
+                                <VBox spacing="5" style="-fx-padding: 10;">
                                     <HBox>
-                                        <Label fx:id="selectedUserNameLabel" style="-fx-font-size: 16px" text="[имя]" />
+                                        <Label fx:id="selectedUserNameLabel" styleClass="title" text="[имя]" />
                                         <Pane HBox.hgrow="ALWAYS" />
-                                        <Label fx:id="selectedUserBalanceLabel" style="-fx-font-size: 14px" text="[баланс]" />
+                                        <Label fx:id="selectedUserBalanceLabel" styleClass="secondary" text="[баланс]" />
                                     </HBox>
-                                    <Separator />
+                                    <Separator styleClass="form-separator" />
                                     <Group fx:id="userControlGroup" disable="true">
-                                        <Button fx:id="userAccountStatusControlButton" text="Заморозить" onAction="#onUserFreezeButtonPressed" />
+                                        <Button fx:id="userAccountStatusControlButton" text="Заморозить" styleClass="md-button,md-primary" onAction="#onUserFreezeButtonPressed" />
                                     </Group>
                                 </VBox>
                             </top>
                             <center>
-                                <TableView fx:id="userPortfolioHistoryTableView" layoutX="10" layoutY="10" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                                <TableView fx:id="userPortfolioHistoryTableView" prefHeight="300" VBox.vgrow="ALWAYS" styleClass="md-table">
                                     <columns>
-                                        <TableColumn fx:id="historyDateColumn" prefWidth="300.0" text="Дата" />
-                                        <TableColumn fx:id="historyActionColumn" prefWidth="100.0" text="Действие" />
-                                        <TableColumn fx:id="historyBalanceColumn" prefWidth="150.0" text="Баланс" />
-                                        <TableColumn fx:id="historyCryptoColumn" prefWidth="150.0" text="Криптовалюта" />
-                                        <TableColumn fx:id="historyCryptoChangeColumn" prefWidth="150.0" text="Количество" />
+                                        <TableColumn fx:id="historyDateColumn" prefWidth="300" text="Дата" />
+                                        <TableColumn fx:id="historyActionColumn" prefWidth="100" text="Действие" />
+                                        <TableColumn fx:id="historyBalanceColumn" prefWidth="150" text="Баланс" />
+                                        <TableColumn fx:id="historyCryptoColumn" prefWidth="150" text="Криптовалюта" />
+                                        <TableColumn fx:id="historyCryptoChangeColumn" prefWidth="150" text="Количество" />
                                     </columns>
                                 </TableView>
                             </center>
@@ -130,17 +128,17 @@
                 </Tab>
 
                 <Tab fx:id="tabSystem" text="Система">
-                    <VBox VBox.vgrow="ALWAYS">
-                        <HBox>
-                            <ComboBox fx:id="numLogsComboBox" prefWidth="90" />
-                            <Button onAction="#onExportLogsButtonPressed" text="Экспортировать" />
+                    <VBox VBox.vgrow="ALWAYS" spacing="10" style="-fx-padding: 10;">
+                        <HBox spacing="10">
+                            <ComboBox fx:id="numLogsComboBox" prefWidth="90" styleClass="md-input" />
+                            <Button onAction="#onExportLogsButtonPressed" text="Экспортировать" styleClass="md-button,md-primary" />
                         </HBox>
 
-                        <TableView fx:id="logsTableView" layoutX="10" layoutY="10" prefHeight="300" prefWidth="700" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="logsTableView" prefHeight="300" prefWidth="700" VBox.vgrow="ALWAYS" styleClass="md-table">
                             <columns>
-                                <TableColumn fx:id="logDateColumn" prefWidth="150.0" text="Дата" />
-                                <TableColumn fx:id="logUserColumn" prefWidth="150.0" text="Пользователь" />
-                                <TableColumn fx:id="logInfoColumn" prefWidth="400.0" text="Информация" />
+                                <TableColumn fx:id="logDateColumn" prefWidth="150" text="Дата" />
+                                <TableColumn fx:id="logUserColumn" prefWidth="150" text="Пользователь" />
+                                <TableColumn fx:id="logInfoColumn" prefWidth="400" text="Информация" />
                             </columns>
                         </TableView>
                     </VBox>
@@ -149,4 +147,5 @@
             </TabPane>
         </VBox>
     </center>
+
 </BorderPane>

@@ -5,70 +5,72 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane style="-fx-background-color: #ebebeb; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.uzlezz.crypman.gui.controllers.PortfolioController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="net.uzlezz.crypman.gui.controllers.PortfolioController"
+            styleClass="root" stylesheets="@material.css">
 
     <top>
         <VBox spacing="5">
-            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
-                <Label fx:id="usernameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-                <Label fx:id="balanceLabel" style="-fx-font-size: 14px;" />
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="md-toolbar">
+                <Label fx:id="usernameLabel" styleClass="primary bold" />
+                <Label fx:id="balanceLabel" styleClass="primary" />
                 <Pane HBox.hgrow="ALWAYS" />
-                <Button fx:id="marketControlButton" onAction="#onNewButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" text="Управление" visible="false" />
-                <Button text="Пополнить баланс" onAction="#addMoneyButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" />
-                <Button text="Купить" onAction="#buyButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" />
-                <Button text="Продать" onAction="#sellButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" />
-                <Button onAction="#onRefreshButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" text="Обновить" />
-                <Button onAction="#onLogoutButtonPressed" style="-fx-background-color: #b3b3b3; -fx-text-fill: #1f1f1f; -fx-font-size: 14;" text="Выйти" />
+                <Button fx:id="marketControlButton" onAction="#onNewButtonPressed" text="Управление"
+                        styleClass="md-button, md-primary" visible="false"/>
+                <Button text="Пополнить баланс" onAction="#addMoneyButtonPressed"
+                        styleClass="md-button, md-primary"/>
+                <Button text="Купить" onAction="#buyButtonPressed"
+                        styleClass="md-button, md-primary"/>
+                <Button text="Продать" onAction="#sellButtonPressed"
+                        styleClass="md-button, md-primary"/>
+                <Button onAction="#onRefreshButtonPressed" text="Обновить"
+                        styleClass="md-button"/>
+                <Button onAction="#onLogoutButtonPressed" text="Выйти"
+                        styleClass="md-button"/>
             </HBox>
-            <Separator style="-fx-background-color: #b5b5b5;" />
+            <Separator styleClass="form-separator"/>
         </VBox>
     </top>
 
     <center>
         <VBox alignment="TOP_CENTER" spacing="20" VBox.vgrow="ALWAYS">
-            <Text style="-fx-fill: #1f1f1f;" text="Портфель">
-                <font>
-                    <Font name="Helvetica Neue" size="24" />
-                </font>
-            </Text>
-
-            <Text fx:id="totalPriceText" fill="#363636" strokeType="OUTSIDE" strokeWidth="0.0" text="\$69.00" textAlignment="CENTER">
-                <font>
-                    <Font size="15.0" />
-                </font>
-            </Text>
+            <Text text="Портфель" styleClass="title"/>
+            <Text fx:id="totalPriceText" text="\$69.00" textAlignment="CENTER"
+                  styleClass="primary"/>
 
             <SplitPane dividerPositions="0.5" orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
                 <TabPane side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
                     <Tab text="Активы">
-                        <ListView fx:id="assetListView" />
+                        <ListView fx:id="assetListView"/>
                     </Tab>
-
                     <Tab text="История операций">
-                        <BorderPane style="-fx-padding: 0 0 3 0">
+                        <BorderPane styleClass="dialog-root">
                             <center>
-                                <ListView fx:id="portfolioHistoryListView" />
+                                <ListView fx:id="portfolioHistoryListView"/>
                             </center>
                             <bottom>
-                                <Button onAction="#exportPortfolioHistoryButtonPressed" text="Экспортировать в файл" />
+                                <Button onAction="#exportPortfolioHistoryButtonPressed"
+                                        text="Экспортировать в файл"
+                                        styleClass="md-button"/>
                             </bottom>
                         </BorderPane>
                     </Tab>
                 </TabPane>
 
                 <VBox alignment="TOP_CENTER" spacing="10" VBox.vgrow="ALWAYS">
-                    <ComboBox fx:id="chartTypeComboBox" onAction="#onChartTypeChanged" prefWidth="200" />
-                    <LineChart fx:id="priceChart" animated="false" createSymbols="false" legendVisible="false" VBox.vgrow="ALWAYS">
+                    <ComboBox fx:id="chartTypeComboBox" onAction="#onChartTypeChanged"
+                              prefWidth="200" styleClass="md-input"/>
+                    <LineChart fx:id="priceChart" animated="false" createSymbols="false"
+                               legendVisible="false" VBox.vgrow="ALWAYS">
                         <xAxis>
-                            <NumberAxis label="Время" fx:id="xAxis" />
+                            <NumberAxis fx:id="xAxis" label="Время"/>
                         </xAxis>
                         <yAxis>
-                            <NumberAxis fx:id="yAxis" label="Стоимость" />
+                            <NumberAxis fx:id="yAxis" label="Стоимость"/>
                         </yAxis>
                     </LineChart>
                 </VBox>
             </SplitPane>
         </VBox>
     </center>
-
 </BorderPane>
